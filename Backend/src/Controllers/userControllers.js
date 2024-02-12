@@ -19,11 +19,7 @@ const createUser = async (req, res) => {
             name,
             email,
             password,
-            phoneNo,
-            emergencyNumbers,
-            bloodGroup,
-            disease,
-            otherInfo,
+            phoneNo
         } = req.body;
 
         const oldUser = await User.findOne({ email: email });
@@ -42,10 +38,6 @@ const createUser = async (req, res) => {
             email: email,
             password: hashedPassword,
             phoneNo: phoneNo,
-            emergencyNumbers: emergencyNumbers,
-            bloodGroup: bloodGroup,
-            disease: disease,
-            otherInfo: otherInfo,
         });
 
         await newUser.save();

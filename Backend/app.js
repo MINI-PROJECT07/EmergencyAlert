@@ -13,9 +13,14 @@ app.use(cors());
 app.use(bodyParser.json());
 
 app.use("/api/user", require("./src/Routes/user"));
+
 app.get("/", (req, res) => {
   res.send("Hello World");
 });
+
+app.get("/demo",(req,res)=>{
+  res.send({message:"It's working .",id:1})
+})
 
 const startServer = async () => {
     await connectDB(MONGO_URI);
