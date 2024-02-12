@@ -88,3 +88,18 @@
 /App/lint/reports/
 
 /App/apikey.properties
+/App/*.iml
+/App/.gradle
+/App/local.properties
+/App/.idea/caches
+/App/.idea/libraries
+/App/.idea/modules.xml
+/App/.idea/workspace.xml
+/App/.idea/navEditor.xml
+/App/.idea/assetWizardSettings.xml
+/App/.DS_Store
+/App/build
+/App/captures
+/App/.externalNativeBuild
+/App/.cxx
+/App/local.properties
