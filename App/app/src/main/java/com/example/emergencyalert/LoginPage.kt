@@ -20,7 +20,9 @@ import androidx.navigation.compose.rememberNavController
 
 
 @Composable
-fun LoginScreen(navController: NavController) {
+fun LoginScreen(navController: NavController
+
+) {
     Surface(
         color = Color.Unspecified,
         modifier = Modifier
@@ -31,6 +33,7 @@ fun LoginScreen(navController: NavController) {
         Column() {
 //            painterResource(id = R.drawable.)
             TextBold("Login")
+            Spacer(modifier = Modifier.height(5.dp))
             Mytextfield(
                 labelvalue = "Email",
                 painterResource(id = R.drawable.gmail)

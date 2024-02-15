@@ -59,6 +59,7 @@ fun Mytextfield(labelvalue: String, painterResource: Painter):String {
         onValueChange = {
             textvalue.value = it
         },
+        shape = RoundedCornerShape(20.dp),
         leadingIcon = {
             Icon(painter = painterResource, contentDescription = "")
         }
@@ -114,6 +115,7 @@ fun PasswordMytextfield(labelvalue: String, painterResource: Painter):String {
             .fillMaxWidth()
             .background(color = Color.White),
         label = { Text(text = labelvalue) },
+        shape = RoundedCornerShape(20.dp),
         value = password.value,
         keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),
         onValueChange = {
@@ -148,7 +150,7 @@ fun Buttoncomponent(value: String, onclick: () -> Unit) {
             .fillMaxWidth()
             .heightIn(48.dp),
         contentPadding = PaddingValues(0.dp),
-        shape = RoundedCornerShape(50.dp),
+        shape = RoundedCornerShape(30.dp),
         colors = ButtonDefaults.buttonColors(Color.Transparent)
     ) {
         Box(

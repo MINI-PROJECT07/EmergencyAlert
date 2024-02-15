@@ -6,8 +6,6 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Call
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -31,7 +29,7 @@ fun SignUpScreen(navController: NavController) {
         ) {
         Column(Modifier.fillMaxSize()) {
             TextBold(value = "Create Account")
-            Spacer(modifier = Modifier.height(20.dp))
+            Spacer(modifier = Modifier.height(10.dp))
             Mytextfield(
                 labelvalue = "First Name",
                 painterResource(id = R.drawable.account_outline)
@@ -43,12 +41,12 @@ fun SignUpScreen(navController: NavController) {
 
             )
             Spacer(modifier = Modifier.height(10.dp))
-            val email = Mytextfield(
+            Mytextfield(
                 labelvalue = "Email",
                 painterResource = painterResource(id = R.drawable.gmail)
             )
             Spacer(modifier = Modifier.height(10.dp))
-            val pass = PasswordMytextfield(
+            PasswordMytextfield(
                 labelvalue = "Password",
                 painterResource = painterResource(id = R.drawable.lock_outline)
             )
@@ -69,7 +67,7 @@ fun SignUpScreen(navController: NavController) {
 
 @Composable
 @Preview(showBackground = true)
-fun previewscreen(){
+fun Previewscreen(){
     val navController = rememberNavController()
     SignUpScreen(navController = navController)
 }
