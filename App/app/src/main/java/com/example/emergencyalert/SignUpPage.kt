@@ -28,21 +28,16 @@ fun SignUpScreen(navController: NavController) {
 
         ) {
         Column(Modifier.fillMaxSize()) {
-            TextNormal(value = "Hello")
             TextBold(value = "Create Account")
             Spacer(modifier = Modifier.height(20.dp))
             Mytextfield(
                 labelvalue = "First Name",
                 painterResource(id = R.drawable.profile)
             )
+            Spacer(modifier = Modifier.height(10.dp))
             Mytextfield(
                 labelvalue = "Phone No",
                 painterResource(id = R.drawable.profile)
-            )
-            Spacer(modifier = Modifier.height(10.dp))
-            Mytextfield(
-                labelvalue = "Last Name",
-                painterResource = painterResource(id = R.drawable.profile)
             )
             Spacer(modifier = Modifier.height(10.dp))
             val email = Mytextfield(
