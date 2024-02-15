@@ -6,6 +6,8 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Call
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -32,29 +34,31 @@ fun SignUpScreen(navController: NavController) {
             Spacer(modifier = Modifier.height(20.dp))
             Mytextfield(
                 labelvalue = "First Name",
-                painterResource(id = R.drawable.profile)
+                painterResource(id = R.drawable.account_outline)
             )
             Spacer(modifier = Modifier.height(10.dp))
             Mytextfield(
                 labelvalue = "Phone No",
-                painterResource(id = R.drawable.profile)
+                painterResource = painterResource(id = R.drawable.cellphone )
+
             )
             Spacer(modifier = Modifier.height(10.dp))
             val email = Mytextfield(
                 labelvalue = "Email",
-                painterResource = painterResource(id = R.drawable.message)
+                painterResource = painterResource(id = R.drawable.gmail)
             )
             Spacer(modifier = Modifier.height(10.dp))
             val pass = PasswordMytextfield(
                 labelvalue = "Password",
-                painterResource = painterResource(id = R.drawable.ic_lock)
+                painterResource = painterResource(id = R.drawable.lock_outline)
             )
-            Spacer(modifier = Modifier.height(90.dp))
+            Spacer(modifier = Modifier.height(50.dp))
             Buttoncomponent(
                 value = "Register"
             ){
 
             }
+            Spacer(modifier = Modifier.height(10.dp))
 
             ClickableLoginTextComponent(tryingToLogin = true,navController)
         }

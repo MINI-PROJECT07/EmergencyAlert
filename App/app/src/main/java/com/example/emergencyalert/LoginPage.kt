@@ -6,6 +6,7 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
@@ -28,24 +29,25 @@ fun LoginScreen(navController: NavController) {
             .padding(20.dp),
     ) {
         Column() {
-            TextNormal("Hello")
-            TextBold("Welcome")
+//            painterResource(id = R.drawable.)
+            TextBold("Login")
             Mytextfield(
                 labelvalue = "Email",
-                painterResource(id = R.drawable.message)
+                painterResource(id = R.drawable.gmail)
             )
             Spacer(modifier = Modifier.height(10.dp))
             PasswordMytextfield(
                 labelvalue = "Password",
-                painterResource = painterResource(id = R.drawable.ic_lock)
+                painterResource = painterResource(id = R.drawable.lock_outline)
             )
-            Spacer(modifier = Modifier.height(90.dp))
+            Spacer(modifier = Modifier.height(50.dp))
             Buttoncomponent(
                 value = "Login",
                 {
 
                 }
             )
+            Spacer(modifier = Modifier.height(10.dp))
             ClickableLoginTextComponent(tryingToLogin = false, navController)
         }
     }

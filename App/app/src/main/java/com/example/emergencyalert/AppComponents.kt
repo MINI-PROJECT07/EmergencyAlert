@@ -1,5 +1,6 @@
 package com.example.emergencyalert
 
+import android.content.res.Resources.Theme
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.PaddingValues
@@ -20,6 +21,7 @@ import androidx.compose.material.icons.filled.Visibility
 import androidx.compose.material.icons.filled.VisibilityOff
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
@@ -37,7 +39,9 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.core.graphics.toColorInt
 import androidx.navigation.NavController
+import com.example.emergencyalert.ui.theme.Greenish
 
 
 @Composable
@@ -152,10 +156,8 @@ fun Buttoncomponent(value: String, onclick: () -> Unit) {
                 .fillMaxWidth()
                 .heightIn(48.dp)
                 .background(
-                    Brush.horizontalGradient(
-                        colors = listOf(Color.DarkGray, Color.LightGray),
-
-                        ), shape = RoundedCornerShape(50.dp)
+                    color = Greenish,
+                    shape = RoundedCornerShape(50.dp)
                 ),
             contentAlignment = Alignment.Center,
         ) {
@@ -172,7 +174,7 @@ fun ClickableLoginTextComponent(tryingToLogin: Boolean = true,navController: Nav
 
     val annotatedString = buildAnnotatedString {
         append(initialText)
-        withStyle(style = SpanStyle(color = Color.LightGray)) {
+        withStyle(style = SpanStyle(color = Color.Blue)) {
             pushStringAnnotation(tag = loginText, annotation = loginText)
             append(loginText)
         }
@@ -186,7 +188,8 @@ fun ClickableLoginTextComponent(tryingToLogin: Boolean = true,navController: Nav
             fontSize = 21.sp,
             fontWeight = FontWeight.Normal,
             fontStyle = FontStyle.Normal,
-            textAlign = TextAlign.Center
+            textAlign = TextAlign.Center,
+
         ),
         text = annotatedString,
         onClick = {
