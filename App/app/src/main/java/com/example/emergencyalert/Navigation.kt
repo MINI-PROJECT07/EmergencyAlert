@@ -16,12 +16,17 @@ import com.example.emergencyalert.routes.Screens
 fun MyNavigation(navController: NavHostController) {
     NavHost(
         navController = navController,
-        startDestination = "",
+        startDestination = Screens.Home.route,
     ) {
         composable(Screens.Home.route) {
-            HomeScreen()
+            HomeScreen(navController)
         }
-
+        composable(Screens.Login.route) {
+            LoginScreen(navController = navController)
+        }
+        composable(Screens.SignUp.route) {
+            SignUpScreen(navController = navController)
+        }
     }
 
 }
