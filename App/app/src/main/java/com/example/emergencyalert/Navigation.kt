@@ -1,31 +1,27 @@
 package com.example.emergencyalert
 
-import androidx.compose.foundation.layout.padding
-import androidx.compose.material.icons.Icons
-import androidx.compose.material3.Scaffold
+import android.content.Context
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
-import androidx.navigation.compose.rememberNavController
 import com.example.emergencyalert.routes.Screens
 
 
 @Composable
-fun MyNavigation(navController: NavHostController) {
+fun MyNavigation(navController: NavHostController,isLoggedIn:Boolean,context: Context) {
     NavHost(
         navController = navController,
-        startDestination = Screens.Home.route,
+        startDestination = if(!isLoggedIn)  Screens.Login.route else Screens.Home.route ,
     ) {
         composable(Screens.Home.route) {
-            HomeScreen(navController)
+            HomeScreen(navController,context)
         }
         composable(Screens.Login.route) {
-            LoginScreen(navController = navController)
+            LoginScreen(navController = navController,context)
         }
         composable(Screens.SignUp.route) {
-            SignUpScreen(navController = navController)
+            SignUpScreen(navController = navController,context)
         }
     }
 

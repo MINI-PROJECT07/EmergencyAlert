@@ -12,7 +12,7 @@ const createUser = async (req, res) => {
         const errors = validationResult(req);
         if (!errors.isEmpty()) {
             console.log(errors);
-            return res.status(400).json({ errors: errors, success: success });
+            return res.status(400).json({ authToken:"", success: success });
         }
 
         const {
@@ -27,7 +27,7 @@ const createUser = async (req, res) => {
         if (oldUser) {
             return res
                 .status(400)
-                .json({ success: success, error: "User already exists" });
+                .json({ success: success, authToken:""});
         }
 
         const salt = await bcrypt.genSalt(10);
@@ -64,7 +64,7 @@ const loginUser = async (req, res) => {
         const errors = validationResult(req);
         if (!errors.isEmpty()) {
             console.log(errors);
-            return res.status(400).json({ error: errors, success });
+            return res.status(400).json({ authToken:"", success });
         }
 
         const { email, password } = req.body;
@@ -74,7 +74,7 @@ const loginUser = async (req, res) => {
             console.log("no user with this email");
             return res
                 .status(400)
-                .json({ error: "No user with this email", success });
+                .json({ authToken:"", success });
         }
 
         const passwordcompare = await bcrypt.compare(password, user.password);
@@ -91,9 +91,9 @@ const loginUser = async (req, res) => {
                 id: user.id,
             },
         };
-        const authtoken = jwt.sign(data, JWT_SECRET);
+        const authToken = jwt.sign(data, JWT_SECRET);
         success = true;
-        res.json({ authtoken: authtoken, success: success });
+        res.json({ authToken: authToken, success: success });
     } catch (error) {
         let success = false;
         console.error(error);

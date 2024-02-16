@@ -1,5 +1,8 @@
 package com.example.emergencyalert.userauth.dto
+import kotlinx.serialization.*
 
+@Serializable
 data class AuthToken(
-    val token: String
+    val success : Boolean,
+    val authToken: String
 )

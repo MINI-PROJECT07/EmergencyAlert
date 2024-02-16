@@ -1,5 +1,6 @@
 package com.example.emergencyalert
 
+import android.content.Context
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -18,7 +19,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 
 @Composable
-fun HomeScreen(navController: NavHostController) {
+fun HomeScreen(navController: NavHostController,context: Context) {
     Scaffold(
         modifier = Modifier.fillMaxSize(),
         bottomBar = {
@@ -43,9 +44,3 @@ fun HomeScreen(navController: NavHostController) {
     }
 }
 
-@Composable
-@Preview(showBackground = true)
-fun HomeScreenPreview() {
-    val navController = rememberNavController()
-    HomeScreen(navController)
-}

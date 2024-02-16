@@ -41,6 +41,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.core.graphics.toColorInt
 import androidx.navigation.NavController
+import com.example.emergencyalert.routes.Screens
 import com.example.emergencyalert.ui.theme.Greenish
 
 
@@ -176,7 +177,7 @@ fun ClickableLoginTextComponent(tryingToLogin: Boolean = true,navController: Nav
 
     val annotatedString = buildAnnotatedString {
         append(initialText)
-        withStyle(style = SpanStyle(color = Color.Blue)) {
+        withStyle(style = SpanStyle(color = Color.Cyan)) {
             pushStringAnnotation(tag = loginText, annotation = loginText)
             append(loginText)
         }
@@ -195,7 +196,15 @@ fun ClickableLoginTextComponent(tryingToLogin: Boolean = true,navController: Nav
         ),
         text = annotatedString,
         onClick = {
-            navController.navigate(if(tryingToLogin) "LoginScreen" else "SignUpScreen")
+            navController.navigate(if(tryingToLogin) Screens.Login.route else Screens.SignUp.route){
+                navController.graph.startDestinationRoute?.let { route ->
+                    popUpTo(route) {
+                        saveState = true
+                    }
+                }
+                launchSingleTop = true
+                restoreState = true
+            }
         },
     )
 }
