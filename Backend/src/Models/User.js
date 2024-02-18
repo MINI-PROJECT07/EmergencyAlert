@@ -56,3 +56,4 @@ const UserSchema = new Schema({
 
 const User = mongoose.model("user", UserSchema);
 module.exports = { User };
+// (16.847188, 74.596146)

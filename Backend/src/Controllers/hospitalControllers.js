@@ -2,6 +2,7 @@ const {validationResult} = require('express-validator');
 const {Hospital} = require('../Models/Hospital.js');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
+const {getDistance} = require("../util/getDistance.js")
 
 const JWT_SECRET = process.env.JWT_SECRET;
 
@@ -19,7 +20,14 @@ const createHospital = async (req, res) => {
             name,
             email,
             password,
-            phoneNo
+            phoneNo,
+            address,
+            city,
+            state,
+            pincode,
+            latitude,
+            longitude,
+            info,
         } = req.body;
 
         const oldHospital = await Hospital.findOne({email: email});
@@ -38,6 +46,13 @@ const createHospital = async (req, res) => {
             email: email,
             password: hashedPassword,
             phoneNo: phoneNo,
+            address: address,
+            city: city,
+            state: state,
+            pincode: pincode,
+            latitude: latitude,
+            longitude: longitude,
+            info: info,
         });
 
         await newHospital.save();
@@ -117,4 +132,37 @@ const getHospitals = async (req, res) => {
     }
 }
 
-module.exports = {createHospital, loginHospital, getHospitalInfo,getHospitals};
+const getHospitalNearest = async (req,res)=>{
+    try{
+        let success = false;
+
+        const errors = validationResult(req);
+        if (!errors.isEmpty()) {
+            console.log(errors);
+            return res.status(400).json({success: success});
+        }
+        const {latitude,longitude} = req.body;
+        const hospitals = await Hospital.find({
+            latitude:{$gte:latitude-0.45,$lte:latitude+0.45},
+            longitude:{$gte:longitude-0.45,$lte:longitude+0.45}
+        }).select('-password') 
+
+        hospitals.sort((a,b)=>{
+            const aDistance = getDistance(a.latitude,a.longitude,latitude,longitude);
+            const bDistance = getDistance(b.latitude,b.longitude,latitude,longitude);
+            return aDistance-bDistance;
+        })
+
+        for(let i=0;i<hospitals.length;i++){
+            hospitals[i] = {...hospitals[i]._doc,distance:getDistance(hospitals[i].latitude,hospitals[i].longitude,latitude,longitude)};
+        }
+        
+        res.status(200).json(hospitals);
+    }
+    catch(error){
+        console.error('Get Hospital Nearest Error', error);
+        res.status(500).json({success: false, error: error});
+    }
+}
+
+module.exports = {createHospital, loginHospital, getHospitalInfo,getHospitals,getHospitalNearest};

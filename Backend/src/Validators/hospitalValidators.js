@@ -22,7 +22,7 @@ const createHospitalValidator = [
         min: 3,
         max: 50,
     }),
-    body("pincode", "Invalid pincode").isPostalCode(),
+    body("pincode", "Invalid pincode").isLength({min: 6, max: 6}).isNumeric(),
     body("latitude", "Invalid latitude").isDecimal(),
     body("longitude", "Invalid longitude").isDecimal(),
     body("info", "Info must be at least 5 characters long").isLength({
@@ -38,4 +38,9 @@ const loginHospitalValidator = [
     }),
 ]
 
-module.exports = { createHospitalValidator, loginHospitalValidator };
+const getHospitalNearestValidator = [
+    body("latitude", "Invalid latitude").exists().isDecimal(),
+    body("longitude", "Invalid longitude").exists().isDecimal(),
+]
+
+module.exports = { createHospitalValidator, loginHospitalValidator ,getHospitalNearestValidator};
