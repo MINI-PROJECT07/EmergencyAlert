@@ -1,1 +1,1 @@
-This is repository for mini project
+This is repository for life saver
