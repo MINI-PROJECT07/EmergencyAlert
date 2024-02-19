@@ -1,9 +1,13 @@
 package com.example.emergencyalert
 
 import android.content.Context
+import android.os.Build
 import android.os.Bundle
 import androidx.activity.ComponentActivity
+import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.compose.setContent
+import androidx.activity.result.contract.ActivityResultContracts
+import androidx.annotation.RequiresApi
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -24,9 +28,11 @@ val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = "au
 
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
+    @RequiresApi(Build.VERSION_CODES.Q)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
+
 
             var isLoggedin by remember { mutableStateOf(true) }
             val navController = rememberNavController()
@@ -37,11 +43,12 @@ class MainActivity : ComponentActivity() {
                 }
                 authCounterFlow.collect {
                     if (it == "0") {
-                       isLoggedin = false
+                        isLoggedin = false
                     }
                 }
             }
-            MyNavigation(navController = navController, isLoggedIn = isLoggedin,context=this)
+
+            MyNavigation(navController = navController, isLoggedIn = isLoggedin, context = this)
         }
     }
 }

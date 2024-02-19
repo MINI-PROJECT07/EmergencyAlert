@@ -1,6 +1,7 @@
 package com.example.emergencyalert.sensor
 
 import android.app.Application
+import com.example.emergencyalert.util.SendSms
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -19,4 +20,14 @@ object SensorModule {
             context = app
         )
     }
+    @Provides
+    @Singleton
+    fun provideSmsService(
+        app: Application
+    ): SendSms {
+        return SendSms(
+            context = app
+        )
+    }
+
 }
