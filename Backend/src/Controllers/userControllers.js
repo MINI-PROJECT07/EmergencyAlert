@@ -12,22 +12,15 @@ const createUser = async (req, res) => {
         const errors = validationResult(req);
         if (!errors.isEmpty()) {
             console.log(errors);
-            return res.status(400).json({ authToken:"", success: success });
+            return res.status(400).json({ authToken: "", success: success });
         }
 
-        const {
-            name,
-            email,
-            password,
-            phoneNo
-        } = req.body;
+        const { name, email, password, phoneNo } = req.body;
 
         const oldUser = await User.findOne({ email: email });
 
         if (oldUser) {
-            return res
-                .status(400)
-                .json({ success: success, authToken:""});
+            return res.status(400).json({ success: success, authToken: "" });
         }
 
         const salt = await bcrypt.genSalt(10);
@@ -64,7 +57,7 @@ const loginUser = async (req, res) => {
         const errors = validationResult(req);
         if (!errors.isEmpty()) {
             console.log(errors);
-            return res.status(400).json({ authToken:"", success });
+            return res.status(400).json({ authToken: "", success });
         }
 
         const { email, password } = req.body;
@@ -72,9 +65,7 @@ const loginUser = async (req, res) => {
         let user = await User.findOne({ email });
         if (!user) {
             console.log("no user with this email");
-            return res
-                .status(400)
-                .json({ authToken:"", success });
+            return res.status(400).json({ authToken: "", success });
         }
 
         const passwordcompare = await bcrypt.compare(password, user.password);
@@ -105,16 +96,49 @@ const loginUser = async (req, res) => {
 };
 
 const getUserInfo = async (req, res) => {
-    try{
+    try {
         const user = await User.findById(req.user.id);
-        if(!user){
-            return res.status(400).send({error:"No user found"});
+        if (!user) {
+            return res.status(400).send({ error: "No user found" });
         }
         res.status(200).send(user);
+    } catch (error) {
+        console.error("Get User Info Error", error);
+        res.status(500).send({ error: "Some internal server error ocurred" });
     }
-    catch(error){
-        console.error("Get User Info Error",error);
-        res.status(500).send({error:"Some internal server error ocurred"});
+};
+
+const updateUser = async (req, res) => {
+    try {
+        const user = await User.findById(req.user.id);
+
+        if (!user) {
+            return res.status(400).send({ error: "No user found" });
+        }
+
+        const {
+            name,
+            phoneNo,
+            emergencyNumbers,
+            bloodGroup,
+            age,
+            gender,
+            disease,
+            otherInfo,
+        } = req.body;
+
+        
+        await User.findByIdAndUpdate(req.user.id,{
+            name:name,phoneNo:phoneNo,emergencyNumbers:emergencyNumbers,bloodGroup:bloodGroup,
+            age:age,gender:gender,disease:disease,otherInfo:otherInfo
+        })
+        res.status(200).send({
+            message: "User information updated successfully",
+            user: user,
+        });
+    } catch (error) {
+        console.error("Update User Info Error", error);
+        res.status(500).send({ error: "Some internal server error occurred" });
     }
-}
-module.exports = { createUser, loginUser,getUserInfo };
+};
+module.exports = { createUser, loginUser, getUserInfo,updateUser };

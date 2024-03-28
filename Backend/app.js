@@ -12,8 +12,7 @@ const MONGO_URI = process.env.MONGO_URI;
 app.use(cors());
 app.use(bodyParser.json());
 
-app.use("/api/user", require("./src/Routes/user"));
-app.use("/api/hospital", require("./src/Routes/hospital"));
+app.use("/api", require("./src/Routes/index"))
 
 app.get("/", (req, res) => {
   res.send("Hello World");

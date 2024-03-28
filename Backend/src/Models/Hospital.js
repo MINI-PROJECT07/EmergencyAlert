@@ -42,6 +42,21 @@ const HospitalScehma = new Schema({
         type:Schema.Types.Decimal128,
         required: true,
     },
+    capacity:{
+        type:Number,
+        default:0,
+        required:true,
+    },
+    isActive:{
+        type:Boolean,
+        default:true,
+        required:true,
+    },
+    remCapacity:{
+        type:Number,
+        default:0,
+        required:true,
+    },
     info:{
         type:String,
         default:"",

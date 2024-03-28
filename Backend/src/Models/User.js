@@ -39,6 +39,14 @@ const UserSchema = new Schema({
         type: String,
         default: "",
     },
+    age:{
+        type:Number,
+        default:18
+    },
+    gender:{
+        type:String,
+        default:""
+    },
     disease: {
         type: [String],
         default: [],
