@@ -20,6 +20,7 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.BottomAppBar
 import androidx.compose.material3.ElevatedCard
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.NavigationBar
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -63,17 +64,8 @@ fun HomeScreen(navController: NavHostController, context: Context, viewModel: Se
     Scaffold(
         modifier = Modifier.fillMaxSize(),
         bottomBar = {
-            BottomAppBar(
-                modifier = Modifier
-                    .padding(20.dp)
-                    .background(Color.White),
-                containerColor = Color(0xFFF5F5F5),
-                tonalElevation = 10.dp,
+            NavigationBar {
 
-                ) {
-                Row(modifier = Modifier.fillMaxSize()) {
-                    Text("BottomAppBar")
-                }
             }
         }
     ) {
@@ -104,6 +96,8 @@ fun HomeScreen(navController: NavHostController, context: Context, viewModel: Se
         }
     }
 }
+
+
 
 @RequiresApi(Build.VERSION_CODES.S)
 @Composable
@@ -203,9 +197,3 @@ fun FeatureCard(
         )
     }
 }
-
-//@Preview
-//@Composable
-//fun PreviewMainHomeScreen() {
-//    MainHomeScreen()
-//}
