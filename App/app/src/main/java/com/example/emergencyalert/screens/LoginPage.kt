@@ -31,7 +31,6 @@ import com.example.emergencyalert.R
 import com.example.emergencyalert.TextBold
 import com.example.emergencyalert.dataStore
 import com.example.emergencyalert.routes.Screens
-import com.example.emergencyalert.userauth.AuthViewModel
 import com.example.emergencyalert.userauth.dto.UserLogin
 import com.example.emergencyalert.userauth.services.AuthService
 import kotlinx.coroutines.launch
@@ -43,7 +42,6 @@ fun LoginScreen(navController: NavController,context:Context) {
     var email by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
     val scope = rememberCoroutineScope()
-    val authViewModel = viewModel<AuthViewModel>()
     Surface(
         color = Color.Unspecified,
         modifier = Modifier
@@ -69,12 +67,12 @@ fun LoginScreen(navController: NavController,context:Context) {
             ) {
                 val userLogin = UserLogin(email = email, password = password)
                 scope.launch {
+                    println("login$userLogin")
                     val authToken = authService.loginUser(userLogin)
                     Log.d("LoginScreen", "LoginScreen: $authToken")
                     if(authToken.success){
                         context.dataStore.edit { preferences ->
                             preferences[stringPreferencesKey("auth_counter")] = authToken.authToken
-                            authViewModel.giveAuthToken(authToken.authToken)
                         }
                         navController.navigate(Screens.Home.route){
                             popUpTo(0)

@@ -33,6 +33,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
+import com.example.emergencyalert.MyNavBar
 import com.example.emergencyalert.hospitals.services.HospitalService
 import com.example.emergencyalert.sensor.SensorViewModel
 import com.example.emergencyalert.ui.theme.MainRound
@@ -62,12 +63,7 @@ fun HomeScreen(navController: NavHostController, context: Context, viewModel: Se
         )
     }
     Scaffold(
-        modifier = Modifier.fillMaxSize(),
-        bottomBar = {
-            NavigationBar {
-
-            }
-        }
+        modifier = Modifier.fillMaxSize()
     ) {
         Column(
             modifier = Modifier

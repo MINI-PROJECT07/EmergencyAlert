@@ -1,5 +1,6 @@
-package com.example.emergencyalert.userinfo
+package com.example.emergencyalert.screens
 
+import android.content.Context
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -20,13 +21,12 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 
 @Composable
-fun ProfileScreen(){
-    Column(modifier = Modifier.fillMaxSize() ){
+fun ProfileScreen(context: Context) {
+    Column(modifier = Modifier.fillMaxSize()) {
         TopBar()
         ProfilePicture()
         Spacer(modifier = Modifier.padding(8.dp))
@@ -36,16 +36,14 @@ fun ProfileScreen(){
 }
 
 
-
-
 @Composable
 fun TopBar(
-){
+) {
     Row(
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.SpaceAround,
         modifier = Modifier.fillMaxWidth(),
-    ){
+    ) {
         Text(
             text = "",
             fontWeight = FontWeight.Bold,
@@ -74,12 +72,12 @@ fun TopBar(
 @Composable
 fun ProfilePicture(
 
-){
+) {
     Row(
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.SpaceAround,
         modifier = Modifier.fillMaxWidth(),
-    ){
+    ) {
 
         Icon(
             imageVector = Icons.Filled.Person, // Choose the desired icon from the Material icons library
@@ -95,7 +93,7 @@ fun ProfilePicture(
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.SpaceAround,
         modifier = Modifier.fillMaxWidth(),
-    ){
+    ) {
         Text(
             text = "Satej Sawant",
             fontWeight = FontWeight.Bold,
@@ -110,7 +108,7 @@ fun ProfilePicture(
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.SpaceAround,
         modifier = Modifier.fillMaxWidth(),
-    ){
+    ) {
         Text(
             text = "email@gmail.com",
             color = Color.Gray,
@@ -120,7 +118,6 @@ fun ProfilePicture(
 
 
     }
-
 
 
 }
@@ -134,7 +131,7 @@ fun ProfileDetails(
         modifier = Modifier.fillMaxWidth()
 
 
-    ){
+    ) {
 
         Row(
             verticalAlignment = Alignment.CenterVertically,
@@ -143,7 +140,7 @@ fun ProfileDetails(
                 .fillMaxWidth()
                 .padding(16.dp),
             horizontalArrangement = Arrangement.SpaceBetween
-        ){
+        ) {
             Text(
                 text = "Email",
                 fontWeight = FontWeight.Bold,
@@ -167,7 +164,7 @@ fun ProfileDetails(
                 .fillMaxWidth()
                 .padding(16.dp),
             horizontalArrangement = Arrangement.SpaceBetween
-        ){
+        ) {
             Text(
                 text = "Medical Information",
                 fontWeight = FontWeight.Bold,
@@ -192,7 +189,7 @@ fun ProfileDetails(
                 .fillMaxWidth()
                 .padding(16.dp),
             horizontalArrangement = Arrangement.SpaceBetween
-        ){
+        ) {
             Text(
                 text = "Emergency Contacts",
                 fontWeight = FontWeight.Bold,
@@ -217,7 +214,7 @@ fun ProfileDetails(
                 .fillMaxWidth()
                 .padding(16.dp),
             horizontalArrangement = Arrangement.SpaceBetween
-        ){
+        ) {
             Text(
                 text = "App Settings",
                 fontWeight = FontWeight.Bold,
@@ -248,47 +245,20 @@ fun OutlinedButtonExample(onClick: () -> Unit) {
 }
 
 @Composable
-fun ProfileLogOut()
-{
+fun ProfileLogOut() {
     Row(
         verticalAlignment = Alignment.Bottom,
         horizontalArrangement = Arrangement.SpaceAround,
         modifier = Modifier
             .fillMaxWidth()
             .padding(16.dp),
-    ){
+    ) {
         OutlinedButtonExample {
 
         }
 
 
-
     }
 
-//    Row(
-//        verticalAlignment = Alignment.Bottom,
-//        horizontalArrangement = Arrangement.SpaceAround,
-//        modifier = Modifier
-//            .fillMaxWidth()
-//            .padding(16.dp),
-//    ){
-//        OutlinedButtonExample {
-//
-//        }
-//
-//    }
-
-
-}
-
-
-
-
-
-@Preview(showBackground = true)
-@Composable
-fun ProfileScreenPreview() {
-
-    ProfileScreen()
 
 }
