@@ -4,9 +4,7 @@ import android.content.Context
 import android.os.Build
 import android.os.Bundle
 import androidx.activity.ComponentActivity
-import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.compose.setContent
-import androidx.activity.result.contract.ActivityResultContracts
 import androidx.annotation.RequiresApi
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -19,7 +17,8 @@ import androidx.datastore.preferences.core.stringPreferencesKey
 import androidx.datastore.preferences.preferencesDataStore
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.compose.rememberNavController
-import com.example.emergencyalert.sensor.SensorViewModel
+import com.example.emergencyalert.hospitals.services.HospitalService
+import com.example.emergencyalert.userauth.AuthViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
@@ -32,23 +31,24 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
-
-
-            var isLoggedin by remember { mutableStateOf(true) }
+            var isLogged by remember { mutableStateOf(true) }
             val navController = rememberNavController()
+            val authViewModel = viewModel<AuthViewModel>()
             LaunchedEffect(true) {
-                val auth_counter = stringPreferencesKey("auth_counter")
+                val authCounter = stringPreferencesKey("auth_counter")
                 val authCounterFlow: Flow<String> = dataStore.data.map { preferences ->
-                    preferences[auth_counter] ?: "0"
+                    preferences[authCounter] ?: "0"
                 }
                 authCounterFlow.collect {
                     if (it == "0") {
-                        isLoggedin = false
+                        isLogged = false
+                    }else{
+                        authViewModel.giveAuthToken(it)
                     }
                 }
             }
 
-            MyNavigation(navController = navController, isLoggedIn = isLoggedin, context = this)
+            MyNavigation(navController = navController, isLoggedIn = isLogged, context = this)
         }
     }
 }

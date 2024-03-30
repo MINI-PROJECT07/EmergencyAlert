@@ -4,5 +4,6 @@ import kotlinx.serialization.*
 @Serializable
 data class AuthToken(
     val success : Boolean,
-    val authToken: String
+    val authToken: String,
+    val error: String,
 )

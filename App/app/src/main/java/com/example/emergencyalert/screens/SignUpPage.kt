@@ -1,4 +1,4 @@
-package com.example.emergencyalert
+package com.example.emergencyalert.screens
 
 import android.content.Context
 import android.util.Log
@@ -18,13 +18,20 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.core.stringPreferencesKey
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
-import androidx.navigation.compose.rememberNavController
+import com.example.emergencyalert.Buttoncomponent
+import com.example.emergencyalert.ClickableLoginTextComponent
+import com.example.emergencyalert.Mytextfield
+import com.example.emergencyalert.PasswordMytextfield
+import com.example.emergencyalert.R
+import com.example.emergencyalert.TextBold
+import com.example.emergencyalert.dataStore
 import com.example.emergencyalert.routes.Screens
+import com.example.emergencyalert.userauth.AuthViewModel
 import com.example.emergencyalert.userauth.dto.UserRegistration
 import com.example.emergencyalert.userauth.services.AuthService
 import kotlinx.coroutines.launch
@@ -37,6 +44,7 @@ fun SignUpScreen(navController: NavController,context: Context) {
     var email by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
     val scope = rememberCoroutineScope()
+    val authViewModel = viewModel<AuthViewModel>()
     Surface(
         color = Color.White,
         modifier = Modifier
@@ -84,6 +92,7 @@ fun SignUpScreen(navController: NavController,context: Context) {
                     if(authToken.success){
                         context.dataStore.edit { preferences ->
                             preferences[stringPreferencesKey("auth_counter")] = authToken.authToken
+                            authViewModel.giveAuthToken(authToken.authToken)
                         }
                         navController.navigate(Screens.Home.route){
                             popUpTo(0)

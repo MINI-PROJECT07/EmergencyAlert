@@ -1,8 +1,7 @@
-package com.example.emergencyalert
+package com.example.emergencyalert.screens
 
 import android.content.Context
 import android.os.Build
-import android.telephony.SmsManager
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.annotation.RequiresApi
@@ -17,35 +16,25 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.BottomAppBar
-import androidx.compose.material3.Button
-import androidx.compose.material3.Card
-import androidx.compose.material3.CardElevation
 import androidx.compose.material3.ElevatedCard
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
-import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
+import com.example.emergencyalert.hospitals.services.HospitalService
 import com.example.emergencyalert.sensor.SensorViewModel
-import com.example.emergencyalert.ui.theme.Greenish
 import com.example.emergencyalert.ui.theme.MainRound
-import com.example.emergencyalert.util.SendSms
 
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -58,6 +47,19 @@ fun HomeScreen(navController: NavHostController, context: Context, viewModel: Se
             println(it)
         }
     )
+
+    LaunchedEffect(key1 = Unit) {
+        permissionResultLauncher.launch(
+            arrayOf(
+                android.Manifest.permission.SEND_SMS,
+                android.Manifest.permission.CALL_PHONE,
+                android.Manifest.permission.ACCESS_BACKGROUND_LOCATION,
+                android.Manifest.permission.ACCESS_FINE_LOCATION,
+                android.Manifest.permission.ACCESS_COARSE_LOCATION,
+                android.Manifest.permission.READ_PHONE_STATE,
+            )
+        )
+    }
     Scaffold(
         modifier = Modifier.fillMaxSize(),
         bottomBar = {
@@ -125,7 +127,9 @@ fun TopRoundPart(
     viewModel: SensorViewModel
 ) {
     ElevatedCard(
-        modifier = modifier.fillMaxWidth().padding(5.dp)
+        modifier = modifier
+            .fillMaxWidth()
+            .padding(5.dp)
     ) {
         Row(
             modifier = Modifier
@@ -146,11 +150,13 @@ fun TopRoundPart(
                     verticalArrangement = Arrangement.Center,
                     horizontalAlignment = Alignment.CenterHorizontally
                 ) {
-                    Text(text = "${viewModel.value1}", style = TextStyle(
-                        fontSize = 30.sp,
-                        fontWeight = FontWeight.SemiBold,
-                        color = Color.White
-                    ))
+                    Text(
+                        text = "${viewModel.value1}", style = TextStyle(
+                            fontSize = 30.sp,
+                            fontWeight = FontWeight.SemiBold,
+                            color = Color.White
+                        )
+                    )
                 }
             }
         }
@@ -188,7 +194,8 @@ fun FeatureCard(
 ) {
     ElevatedCard(
         modifier = modifier
-            .padding(horizontal = 4.dp).height(130.dp),
+            .padding(horizontal = 4.dp)
+            .height(130.dp),
     ) {
         Text(
             text = text,
