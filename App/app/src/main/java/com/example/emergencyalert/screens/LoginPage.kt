@@ -23,6 +23,7 @@ import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.core.stringPreferencesKey
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
+import androidx.navigation.NavGraph.Companion.findStartDestination
 import com.example.emergencyalert.Buttoncomponent
 import com.example.emergencyalert.ClickableLoginTextComponent
 import com.example.emergencyalert.Mytextfield
@@ -37,7 +38,7 @@ import kotlinx.coroutines.launch
 
 
 @Composable
-fun LoginScreen(navController: NavController,context:Context) {
+fun LoginScreen(navController: NavController, context: Context) {
     val authService = AuthService.create()
     var email by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
@@ -70,12 +71,16 @@ fun LoginScreen(navController: NavController,context:Context) {
                     println("login$userLogin")
                     val authToken = authService.loginUser(userLogin)
                     Log.d("LoginScreen", "LoginScreen: $authToken")
-                    if(authToken.success){
+                    if (authToken.success) {
                         context.dataStore.edit { preferences ->
                             preferences[stringPreferencesKey("auth_counter")] = authToken.authToken
                         }
-                        navController.navigate(Screens.Home.route){
-                            popUpTo(0)
+                        navController.navigate(Screens.Home.route) {
+                            popUpTo(navController.graph.findStartDestination().id) {
+                                saveState = true
+                            }
+                            launchSingleTop = true
+                            restoreState = true
                         }
                     }
                 }

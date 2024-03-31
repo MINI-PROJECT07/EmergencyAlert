@@ -16,6 +16,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.unit.dp
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.core.edit
@@ -43,14 +44,18 @@ class MainActivity : ComponentActivity() {
                     preferences[authCounter] ?: "0"
                 }
                 authCounterFlow.collect {
-                    if (it=="0") {
+                    if (it == "0") {
                         isLogged = false
+                    }else{
+                        isLogged = true
                     }
                 }
             }
             Scaffold(
                 bottomBar = {
-                    MyNavBar(navController = navController)
+                    if (isLogged) {
+                        MyNavBar(navController = navController)
+                    }
                 }
             ) {
                 Column(

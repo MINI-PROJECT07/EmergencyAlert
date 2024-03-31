@@ -25,6 +25,7 @@ import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import com.example.emergencyalert.hospitals.HospitalViewModel
 import com.example.emergencyalert.screens.HospitalScreen
 import com.example.emergencyalert.routes.Screens
 import com.example.emergencyalert.screens.HistoryScreen
@@ -39,6 +40,7 @@ import com.example.emergencyalert.screens.ProfileScreen
 @Composable
 fun MyNavigation(navController: NavHostController, isLoggedIn: Boolean, context: Context) {
     val sensorviewModel = viewModel<SensorViewModel>()
+    val hospitalViewModel = viewModel<HospitalViewModel>()
     NavHost(
         navController = navController,
         startDestination = if (!isLoggedIn) Screens.Login.route else Screens.Home.route,
@@ -53,7 +55,7 @@ fun MyNavigation(navController: NavHostController, isLoggedIn: Boolean, context:
             SignUpScreen(navController = navController, context)
         }
         composable(Screens.Hospitals.route) {
-            HospitalScreen(context = context)
+            HospitalScreen(context = context,hospitalViewModel)
         }
         composable(Screens.Profile.route) {
             ProfileScreen(context = context)
