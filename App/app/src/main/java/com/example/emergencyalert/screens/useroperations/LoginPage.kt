@@ -1,4 +1,4 @@
-package com.example.emergencyalert.screens
+package com.example.emergencyalert.screens.useroperations
 
 import android.content.Context
 import android.util.Log

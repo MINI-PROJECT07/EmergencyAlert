@@ -2,11 +2,14 @@ package com.example.emergencyalert.userauth.services
 
 import com.example.emergencyalert.constants.HttpRoutes
 import com.example.emergencyalert.userauth.dto.AuthToken
+import com.example.emergencyalert.userauth.dto.UserInfo
 import com.example.emergencyalert.userauth.dto.UserLogin
+import com.example.emergencyalert.userauth.dto.UserMedInfo
 import com.example.emergencyalert.userauth.dto.UserRegistration
 import io.ktor.client.*
 import io.ktor.client.call.body
 import io.ktor.client.request.*
+import io.ktor.client.utils.EmptyContent.contentType
 import io.ktor.http.*
 
 class AuthServiceImpl(
@@ -24,5 +27,26 @@ class AuthServiceImpl(
             contentType(ContentType.Application.Json)
             setBody(userInfo)
         }.body()
+    }
+
+    override suspend fun addMedInfo(userInfo: UserMedInfo,authToken:String):Boolean {
+        val response = client.put(HttpRoutes.ADD_MED_INFO){
+            headers{
+                append("authToken",authToken)
+            }
+            contentType(ContentType.Application.Json)
+            setBody(userInfo)
+        }
+        println(response)
+        return response.status == HttpStatusCode.OK
+    }
+
+    override suspend fun getUserInfo(authToken: String): UserInfo {
+        val res = client.get(HttpRoutes.GET_USER_INFO){
+            headers{
+                append("authToken",authToken)
+            }
+        }
+        return res.body()
     }
 }

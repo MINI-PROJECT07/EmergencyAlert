@@ -48,7 +48,7 @@ import androidx.compose.ui.window.Dialog
 import androidx.core.graphics.toColorInt
 import androidx.navigation.NavController
 import com.example.emergencyalert.routes.Screens
-import com.example.emergencyalert.ui.theme.Greenish
+import com.example.emergencyalert.ui.theme.MainColor
 import kotlinx.coroutines.delay
 
 
@@ -166,7 +166,7 @@ fun Buttoncomponent(value: String, onclick: () -> Unit) {
                 .fillMaxWidth()
                 .heightIn(48.dp)
                 .background(
-                    color = Greenish,
+                    color = MainColor,
                     shape = RoundedCornerShape(50.dp)
                 ),
             contentAlignment = Alignment.Center,

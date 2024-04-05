@@ -52,6 +52,7 @@ class MainActivity : ComponentActivity() {
                 }
             }
             Scaffold(
+                modifier = Modifier.fillMaxSize(),
                 bottomBar = {
                     if (isLogged) {
                         MyNavBar(navController = navController)

@@ -47,7 +47,7 @@ import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Dialog
 import androidx.navigation.NavHostController
 import com.example.emergencyalert.sensor.SensorViewModel
-import com.example.emergencyalert.ui.theme.MainRound
+import com.example.emergencyalert.ui.theme.MainColor
 import com.example.emergencyalert.util.SendSms
 import com.google.accompanist.permissions.ExperimentalPermissionsApi
 import com.google.accompanist.permissions.isGranted
@@ -154,12 +154,12 @@ fun TopRoundPart(
             Box(
                 modifier = Modifier
                     .size(200.dp)
-                    .background(color = MainRound, shape = CircleShape),
+                    .background(color = MainColor, shape = CircleShape),
             ) {
                 Column(
                     modifier = Modifier
                         .size(200.dp)
-                        .background(Color.Green, shape = CircleShape),
+                        .background(MainColor, shape = CircleShape),
                     verticalArrangement = Arrangement.Center,
                     horizontalAlignment = Alignment.CenterHorizontally
                 ) {

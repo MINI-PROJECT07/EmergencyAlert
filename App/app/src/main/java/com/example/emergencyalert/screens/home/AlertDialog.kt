@@ -57,6 +57,7 @@ fun AccidentDialog(
         mutableStateOf(false)
     }
     val scope = rememberCoroutineScope();
+
     if (sensorViewModel.value1 >= 20 && !openDialog.value) {
         sensorViewModel.pauseSensor()
         openDialog.value = true
@@ -72,21 +73,16 @@ fun AccidentDialog(
             if (!isAccident.value) {
                 openDialog.value = false // Automatically close dialog after 30 seconds
                 val latLong = LatLong(
-                    locationViewModel.location.value!!.latitude,
-                    locationViewModel.location.value!!.longitude
-                )
-                SendSms(context = context).sendSms(
-                    latLong,
-                    "+918767206376"
+                    locationViewModel.location.value?.latitude,
+                    locationViewModel.location.value?.longitude
                 )
                 scope.launch {
                     accidentViewModel.accidentHappened(
-                        latLong,
-                        sensorViewModel.value1
+                        latLong
                     );
                 }
                 sensorViewModel.startSensor()
-                timeLeft.value = 30
+                timeLeft.intValue = 30
             }
         }
 
@@ -139,14 +135,9 @@ fun AccidentDialog(
                                     locationViewModel.location.value?.latitude,
                                     locationViewModel.location.value?.longitude
                                 )
-                                SendSms(context = context).sendSms(
-                                    latLong,
-                                    "+918767206376"
-                                )
                                 scope.launch {
                                     accidentViewModel.accidentHappened(
-                                        latLong,
-                                        sensorViewModel.value1
+                                        latLong
                                     );
                                 }
                                 isAccident.value = true
