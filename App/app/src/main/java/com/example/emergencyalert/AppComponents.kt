@@ -21,7 +21,12 @@ import androidx.compose.material.icons.filled.Visibility
 import androidx.compose.material.icons.filled.VisibilityOff
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
@@ -39,14 +44,16 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.compose.ui.window.Dialog
 import androidx.core.graphics.toColorInt
 import androidx.navigation.NavController
 import com.example.emergencyalert.routes.Screens
 import com.example.emergencyalert.ui.theme.Greenish
+import kotlinx.coroutines.delay
 
 
 @Composable
-fun Mytextfield(labelvalue: String, painterResource: Painter):String {
+fun Mytextfield(labelvalue: String, painterResource: Painter): String {
     val textvalue = remember {
         mutableStateOf("")
     }
@@ -104,7 +111,7 @@ fun TextNormal(value: String) {
 }
 
 @Composable
-fun PasswordMytextfield(labelvalue: String, painterResource: Painter):String {
+fun PasswordMytextfield(labelvalue: String, painterResource: Painter): String {
     val password = remember {
         mutableStateOf("")
     }
@@ -170,7 +177,7 @@ fun Buttoncomponent(value: String, onclick: () -> Unit) {
 }
 
 @Composable
-fun ClickableLoginTextComponent(tryingToLogin: Boolean = true,navController: NavController) {
+fun ClickableLoginTextComponent(tryingToLogin: Boolean = true, navController: NavController) {
     val initialText =
         if (tryingToLogin) "Already have an account? " else "Don’t have an account yet? "
     val loginText = if (tryingToLogin) "Login" else "Register"
@@ -193,10 +200,10 @@ fun ClickableLoginTextComponent(tryingToLogin: Boolean = true,navController: Nav
             fontStyle = FontStyle.Normal,
             textAlign = TextAlign.Center,
 
-        ),
+            ),
         text = annotatedString,
         onClick = {
-            navController.navigate(if(tryingToLogin) Screens.Login.route else Screens.SignUp.route){
+            navController.navigate(if (tryingToLogin) Screens.Login.route else Screens.SignUp.route) {
                 navController.graph.startDestinationRoute?.let { route ->
                     popUpTo(route) {
                         saveState = true

@@ -85,10 +85,11 @@ dependencies {
     implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.6.0")
     implementation("io.ktor:ktor-client-content-negotiation:2.3.8")
     implementation("io.ktor:ktor-serialization-kotlinx-json:2.3.8")
-
     implementation("com.google.dagger:hilt-android:2.48")
     kapt("com.google.dagger:hilt-android-compiler:2.48")
+    implementation ("com.google.accompanist:accompanist-permissions:0.35.0-alpha")
 
+    implementation("com.google.android.gms:play-services-location:21.2.0")
 }
 kapt {
     correctErrorTypes = true

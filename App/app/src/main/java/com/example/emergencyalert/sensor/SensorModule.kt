@@ -1,7 +1,9 @@
 package com.example.emergencyalert.sensor
 
 import android.app.Application
+import com.example.emergencyalert.location.DefaultLocationClient
 import com.example.emergencyalert.util.SendSms
+import com.google.android.gms.location.LocationServices
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -29,5 +31,6 @@ object SensorModule {
             context = app
         )
     }
+
 
 }

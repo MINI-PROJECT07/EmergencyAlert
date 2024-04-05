@@ -1,5 +1,6 @@
 package com.example.emergencyalert
 
+import com.example.emergencyalert.location.LocationViewModel
 import android.content.Context
 import android.os.Build
 import androidx.annotation.RequiresApi
@@ -25,11 +26,12 @@ import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import com.example.emergencyalert.accidents.AccidentViewModel
 import com.example.emergencyalert.hospitals.HospitalViewModel
 import com.example.emergencyalert.screens.HospitalScreen
 import com.example.emergencyalert.routes.Screens
 import com.example.emergencyalert.screens.HistoryScreen
-import com.example.emergencyalert.screens.HomeScreen
+import com.example.emergencyalert.screens.home.HomeScreen
 import com.example.emergencyalert.screens.LoginScreen
 import com.example.emergencyalert.screens.SignUpScreen
 import com.example.emergencyalert.sensor.SensorViewModel
@@ -41,12 +43,15 @@ import com.example.emergencyalert.screens.ProfileScreen
 fun MyNavigation(navController: NavHostController, isLoggedIn: Boolean, context: Context) {
     val sensorviewModel = viewModel<SensorViewModel>()
     val hospitalViewModel = viewModel<HospitalViewModel>()
+    val locationViewModel = viewModel<LocationViewModel>()
+    val accidentViewModel = viewModel<AccidentViewModel>()
+
     NavHost(
         navController = navController,
         startDestination = if (!isLoggedIn) Screens.Login.route else Screens.Home.route,
     ) {
         composable(Screens.Home.route) {
-            HomeScreen(navController, context, sensorviewModel)
+            HomeScreen(navController, context, sensorviewModel,locationViewModel,accidentViewModel)
         }
         composable(Screens.Login.route) {
             LoginScreen(navController = navController, context)
@@ -55,7 +60,7 @@ fun MyNavigation(navController: NavHostController, isLoggedIn: Boolean, context:
             SignUpScreen(navController = navController, context)
         }
         composable(Screens.Hospitals.route) {
-            HospitalScreen(context = context,hospitalViewModel)
+            HospitalScreen(context = context,hospitalViewModel,locationViewModel)
         }
         composable(Screens.Profile.route) {
             ProfileScreen(context = context)

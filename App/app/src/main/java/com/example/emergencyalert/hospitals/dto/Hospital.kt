@@ -1,5 +1,6 @@
 package com.example.emergencyalert.hospitals.dto
 
+import android.health.connect.datatypes.DistanceRecord
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
@@ -19,7 +20,8 @@ data class Hospital (
     val date: String,
     val capacity: Int,
     val isActive: Boolean,
-    val remCapacity: Int
+    val remCapacity: Int,
+    val distance:Double?
 )
 
 @Serializable

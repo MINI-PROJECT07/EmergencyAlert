@@ -15,18 +15,20 @@ import javax.inject.Inject
 @HiltViewModel
 class SensorViewModel @Inject constructor(
     private val accelerometerSensor: ParentSensor,
-    private val sendSms: SendSms
 ):ViewModel(){
     var value1 by mutableStateOf(0);
+
+    fun pauseSensor(){
+        accelerometerSensor.stopListening()
+    }
+    fun startSensor(){
+        accelerometerSensor.startListening()
+    }
     init {
         accelerometerSensor.startListening()
         accelerometerSensor.setOnSensorValuesChangedListener { values->
             Log.d("SensorViewModel", "onSensorValuesChanged: ${values}")
             value1 = values[0].toInt()
-            if(value1>40){
-                sendSms.sendSms(value1);
-                accelerometerSensor.stopListening()
-            }
         }
     }
 }

@@ -2,9 +2,11 @@ package com.example.emergencyalert.screens
 
 import android.content.Context
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -17,6 +19,7 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.CardElevation
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
@@ -41,44 +44,58 @@ import com.example.emergencyalert.dataStore
 import com.example.emergencyalert.hospitals.HospitalViewModel
 import com.example.emergencyalert.hospitals.dto.Hospital
 import com.example.emergencyalert.hospitals.services.HospitalService
+import com.example.emergencyalert.location.LatLong
+import com.example.emergencyalert.location.LocationViewModel
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 
 @Composable
-fun HospitalScreen(context:Context,hospitalViewModel: HospitalViewModel) {
-//    val hospitalService = HospitalService.create()
-//    var hospitals = remember {
-//        mutableListOf<Hospital>();
-//    }
-//    var authToken by remember {
-//        mutableStateOf("")
-//    }
-//    LaunchedEffect(key1 = true) {
-//        val authCounter = stringPreferencesKey("auth_counter")
-//        val authCounterFlow: Flow<String> = context.dataStore.data.map { preferences ->
-//            preferences[authCounter] ?: "0"
-//        }
-//        authCounterFlow.collect {
-//            if(it!="0"){
-//                authToken = it;
-//                var curh = hospitalService.getHospitals(authToken);
-//                for(h in curh){
-//                    hospitals.add(h);
-//                }
-//                println("***"+hospitals)
-//
-//            }
-//        }
-//    }
+fun HospitalScreen(
+    context: Context,
+    hospitalViewModel: HospitalViewModel,
+    locationViewModel: LocationViewModel
+) {
+    var isLoading by remember { mutableStateOf(true) }
     Scaffold() {
-        Column(modifier = Modifier
-            .fillMaxWidth()
-            .padding(it)
-            .padding(bottom = 80.dp)){
-            LazyColumn(modifier = Modifier.fillMaxWidth()) {
-                items(items = hospitalViewModel.hospitals){
-                    hospital->
-                    HospitalItem(hospital);
+        Column(
+
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(it)
+                .padding(bottom = 80.dp)
+        ) {
+
+            LaunchedEffect(locationViewModel.location) {
+                if (locationViewModel.location.value != null) {
+                    hospitalViewModel.getHospitals(
+                        LatLong(
+                            locationViewModel.location.value!!.latitude,
+                            locationViewModel.location.value!!.longitude
+                        )
+                    )
+                    println(hospitalViewModel.hospitals)
+                    isLoading = false
+                }
+            }
+            LazyColumn(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .fillMaxHeight(),
+                horizontalAlignment = Alignment.CenterHorizontally,
+                verticalArrangement = Arrangement.Center
+            ) {
+                if (isLoading) {
+                    item {
+                        CircularProgressIndicator(
+                            modifier = Modifier.width(64.dp),
+                            color = MaterialTheme.colorScheme.secondary,
+                            trackColor = MaterialTheme.colorScheme.surfaceVariant,
+                        )
+                    }
+                } else {
+                    items(items = hospitalViewModel.hospitals) { hospital ->
+                        HospitalItem(hospital);
+                    }
                 }
             }
         }

@@ -4,6 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.emergencyalert.hospitals.dto.Hospital
 import com.example.emergencyalert.hospitals.services.HospitalService
+import com.example.emergencyalert.location.LatLong
 import com.example.emergencyalert.userauth.dto.AuthToken
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
@@ -16,12 +17,15 @@ class HospitalViewModel @Inject constructor(
 ): ViewModel(){
     var hospitals = mutableListOf<Hospital>();
 
-    fun getHospitals(){
+    fun getHospitals(latLong: LatLong){
         viewModelScope.launch {
-            hospitals = hospitalService.getHospitals(authToken).toMutableList();
+            println(authToken)
+            if(authToken!="0"){
+                hospitals = hospitalService.getHospitalsNearest(authToken,latLong).toMutableList()
+            }
         }
     }
-    init {
-        getHospitals();
-    }
+//    init {
+//        getHospitals();
+//    }
 }
