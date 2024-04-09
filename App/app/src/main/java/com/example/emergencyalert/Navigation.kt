@@ -5,6 +5,7 @@ import com.example.emergencyalert.location.LocationViewModel
 import android.content.Context
 import android.os.Build
 import androidx.annotation.RequiresApi
+import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.height
@@ -31,6 +32,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.text.style.TextAlign
@@ -42,15 +44,19 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import com.example.emergencyalert.accidents.AccidentViewModel
 import com.example.emergencyalert.hospitals.HospitalViewModel
-import com.example.emergencyalert.screens.HospitalScreen
+import com.example.emergencyalert.screens.hospital.HospitalScreen
 import com.example.emergencyalert.routes.Screens
-import com.example.emergencyalert.screens.HistoryScreen
+import com.example.emergencyalert.screens.donors.DonorScreen
+import com.example.emergencyalert.screens.useraccount.HistoryScreen
 import com.example.emergencyalert.screens.home.HomeScreen
+import com.example.emergencyalert.screens.useraccount.Contacts
+import com.example.emergencyalert.screens.useroperations.AddContactsForm
 import com.example.emergencyalert.screens.useroperations.AddMedInfo
 import com.example.emergencyalert.screens.useroperations.LoginScreen
 import com.example.emergencyalert.screens.useroperations.SignUpScreen
 import com.example.emergencyalert.sensor.SensorViewModel
 import com.example.emergencyalert.ui.theme.MainColor
+import com.example.emergencyalert.ui.theme.MainColor3
 import com.example.emergencyalert.userauth.UserViewModel
 
 
@@ -62,39 +68,56 @@ fun MyNavigation(navController: NavHostController, isLoggedIn: Boolean, context:
     val locationViewModel = viewModel<LocationViewModel>()
     val accidentViewModel = viewModel<AccidentViewModel>()
     val userViewModel = viewModel<UserViewModel>()
-
     NavHost(
         navController = navController,
-        startDestination = if (!isLoggedIn) Screens.Login.route else Screens.Home.route,
+        startDestination = if (!isLoggedIn) Screens.Login.route
+        else Screens.Home.route,
     ) {
         composable(Screens.Home.route) {
-            HomeScreen(
-                navController,
-                context,
-                sensorviewModel,
-                locationViewModel,
-                accidentViewModel
-            )
+            if (userViewModel.isMedInfoAdded.value && userViewModel.areContactsAdded.value) {
+                HomeScreen(
+                    navController,
+                    context,
+                    sensorviewModel,
+                    locationViewModel,
+                    accidentViewModel,
+                    userViewModel
+                )
+            } else if (!userViewModel.isMedInfoAdded.value) {
+                AddMedInfo(
+                    context = context,
+                    navController = navController,
+                    userViewModel = userViewModel
+                )
+            } else if (!userViewModel.areContactsAdded.value) {
+                AddContactsForm(userViewModel)
+            }
+
         }
         composable(Screens.Login.route) {
-            LoginScreen(navController = navController, context)
+            LoginScreen(navController = navController, context, userViewModel)
         }
         composable(Screens.SignUp.route) {
-            SignUpScreen(navController = navController, context)
+            SignUpScreen(
+                navController = navController, context,
+                userViewModel
+            )
         }
         composable(Screens.Hospitals.route) {
             HospitalScreen(context = context, hospitalViewModel, locationViewModel)
         }
         composable(Screens.Profile.route) {
-            ProfileScreen(context = context,userViewModel)
+            ProfileScreen(context = context, userViewModel, navController)
         }
         composable(Screens.History.route) {
             HistoryScreen(context = context)
         }
-        composable(Screens.AddMedInfo.route) {
-            AddMedInfo(context, navController,userViewModel)
+        composable(Screens.Contacts.route) {
+            Contacts(userViewModel = userViewModel)
         }
-
+        composable(Screens.Donors.route) {
+            DonorScreen()
+        }
     }
 
 }
@@ -116,7 +139,20 @@ fun MyNavBar(navController: NavHostController) {
                     bottomStart = 20.dp,
                     bottomEnd = 20.dp
                 )
-            ),
+            )
+            .border(
+                width = 0.5.dp,
+                color = MainColor3,
+                shape = RoundedCornerShape(
+                    topStart = 20.dp,
+                    topEnd = 20.dp,
+                    bottomStart = 20.dp,
+                    bottomEnd = 20.dp
+                )
+            )
+            .shadow(
+                elevation = 10.dp
+            )
     ) {
         BottomNavItem().bottomNavItems().forEachIndexed { ind, navItem ->
             NavigationBarItem(selected = (selectedItem == ind),
@@ -124,8 +160,8 @@ fun MyNavBar(navController: NavHostController) {
                     selectedIconColor = MainColor,
                     selectedTextColor = MainColor,
                     selectedIndicatorColor = Color.White,
-                    unselectedIconColor = NavigationBarItemDefaults.colors().unselectedIconColor,
-                    unselectedTextColor = NavigationBarItemDefaults.colors().unselectedTextColor,
+                    unselectedIconColor = Color.Black,
+                    unselectedTextColor = Color.Black,
                     disabledIconColor = NavigationBarItemDefaults.colors().disabledIconColor,
                     disabledTextColor = NavigationBarItemDefaults.colors().disabledTextColor,
                 ),
@@ -197,7 +233,7 @@ data class BottomNavItem(
             ),
             BottomNavItem(
                 icon = Icons.Filled.Bloodtype,
-                route = Screens.Profile.route,
+                route = Screens.Donors.route,
                 title = "Donors"
             ),
             BottomNavItem(

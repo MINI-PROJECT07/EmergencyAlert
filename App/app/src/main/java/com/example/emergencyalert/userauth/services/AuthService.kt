@@ -1,5 +1,6 @@
 package com.example.emergencyalert.userauth.services
 
+import com.example.emergencyalert.userauth.dto.AddContacts
 import com.example.emergencyalert.userauth.dto.AuthToken
 import com.example.emergencyalert.userauth.dto.UserInfo
 import com.example.emergencyalert.userauth.dto.UserLogin
@@ -17,6 +18,8 @@ interface AuthService {
     suspend fun loginUser(userInfo: UserLogin): AuthToken
 
     suspend fun addMedInfo(userInfo: UserMedInfo,authToken:String):Boolean
+
+    suspend fun addContacts(contacts: AddContacts, authToken: String):Boolean
 
     suspend fun getUserInfo(authToken: String): UserInfo
     companion object   {

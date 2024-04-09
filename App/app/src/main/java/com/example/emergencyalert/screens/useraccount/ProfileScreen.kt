@@ -31,12 +31,14 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
+import com.example.emergencyalert.routes.Screens
 import com.example.emergencyalert.userauth.UserViewModel
 import com.example.emergencyalert.userauth.dto.Contact
 import com.example.emergencyalert.userauth.dto.UserInfo
 
 @Composable
-fun ProfileScreen(context: Context, userViewModel: UserViewModel) {
+fun ProfileScreen(context: Context, userViewModel: UserViewModel, navController: NavController) {
     val diseases = listOf<String>()
     val emergencyNumbers = listOf<Contact>()
     var userInfo by remember {
@@ -67,7 +69,7 @@ fun ProfileScreen(context: Context, userViewModel: UserViewModel) {
             }
         }
         ProfilePicture(userInfo)
-        Details(userInfo)
+        Details(userInfo, navController)
     }
 }
 
@@ -107,7 +109,7 @@ fun ProfilePicture(userInfo: UserInfo?) {
 }
 
 @Composable
-fun Details(userInfo: UserInfo?) {
+fun Details(userInfo: UserInfo?, navController: NavController) {
     Column(
         modifier = Modifier.fillMaxWidth()
 
@@ -239,7 +241,15 @@ fun Details(userInfo: UserInfo?) {
                 Text(text = "Blood Donation")
             }
             Button(
-                onClick = { /* Handle button 2 click */ },
+                onClick = {
+                    navController.navigate(Screens.Contacts.route) {
+                        popUpTo(Screens.Profile.route) {
+                            inclusive = true
+                        }
+                        launchSingleTop = true
+                        restoreState = true
+                    }
+                },
                 modifier = Modifier
                     .fillMaxWidth()
                     .weight(1f)

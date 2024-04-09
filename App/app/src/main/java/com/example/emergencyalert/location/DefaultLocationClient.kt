@@ -22,9 +22,11 @@ class DefaultLocationClient(
     @SuppressLint("MissingPermission")
     override fun getLocationUpdates(interval: Long): Flow<Location> {
         return callbackFlow {
-            if (!context.hasLocationPermission()) {
-                throw LocationClient.LocationException("Location permission not granted")
-            }
+//            if (!context.hasLocationPermission()) {
+//               return callbackFlow {
+//                    throw LocationClient.LocationException("Location permission not granted")
+//                }
+//            }
             val locationManager =
                 context.getSystemService(Context.LOCATION_SERVICE) as LocationManager
             val isGpsEnabled = locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)

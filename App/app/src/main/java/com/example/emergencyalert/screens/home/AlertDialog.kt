@@ -38,6 +38,7 @@ import com.example.emergencyalert.accidents.AccidentViewModel
 import com.example.emergencyalert.location.LatLong
 import com.example.emergencyalert.location.LocationViewModel
 import com.example.emergencyalert.sensor.SensorViewModel
+import com.example.emergencyalert.userauth.UserViewModel
 import com.example.emergencyalert.util.SendSms
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
@@ -48,8 +49,8 @@ import kotlinx.coroutines.launch
 fun AccidentDialog(
     sensorViewModel: SensorViewModel, context: Context,
     locationViewModel: LocationViewModel,
-    accidentViewModel: AccidentViewModel
-
+    accidentViewModel: AccidentViewModel,
+    userViewModel: UserViewModel
 ) {
     val openDialog = remember { mutableStateOf(false) }
     val timeLeft = remember { mutableIntStateOf(30) }
@@ -70,19 +71,19 @@ fun AccidentDialog(
                 delay(1000)
                 timeLeft.value -= 1
             }
-            if (!isAccident.value) {
-                openDialog.value = false // Automatically close dialog after 30 seconds
+            if (!isAccident.value) { // Automatically close dialog after 30 seconds
                 val latLong = LatLong(
                     locationViewModel.location.value?.latitude,
                     locationViewModel.location.value?.longitude
                 )
                 scope.launch {
                     accidentViewModel.accidentHappened(
-                        latLong
+                        latLong,userViewModel.userInfo.value?.emergencyNumbers
                     );
                 }
                 sensorViewModel.startSensor()
                 timeLeft.intValue = 30
+                openDialog.value = false
             }
         }
 
@@ -137,7 +138,7 @@ fun AccidentDialog(
                                 )
                                 scope.launch {
                                     accidentViewModel.accidentHappened(
-                                        latLong
+                                        latLong,userViewModel.userInfo.value?.emergencyNumbers
                                     );
                                 }
                                 isAccident.value = true

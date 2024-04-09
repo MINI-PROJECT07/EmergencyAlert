@@ -1,13 +1,13 @@
-package com.example.emergencyalert.screens
+package com.example.emergencyalert.screens.hospital
 
 import android.content.Context
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxHeight
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -18,7 +18,6 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
-import androidx.compose.material3.CardElevation
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
@@ -38,16 +37,12 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.datastore.preferences.core.stringPreferencesKey
 import com.example.emergencyalert.R
-import com.example.emergencyalert.dataStore
 import com.example.emergencyalert.hospitals.HospitalViewModel
 import com.example.emergencyalert.hospitals.dto.Hospital
-import com.example.emergencyalert.hospitals.services.HospitalService
 import com.example.emergencyalert.location.LatLong
 import com.example.emergencyalert.location.LocationViewModel
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.map
+import com.example.emergencyalert.ui.theme.MainColor3
 
 @Composable
 fun HospitalScreen(
@@ -110,7 +105,14 @@ fun HospitalItem(hospital: Hospital) {
             .fillMaxWidth()
             .padding(16.dp),
         elevation = CardDefaults.elevatedCardElevation(),
-        shape = RoundedCornerShape(16.dp)
+        shape = RoundedCornerShape(16.dp),
+        colors = CardDefaults.cardColors().copy(
+            containerColor = Color.White,
+            contentColor = CardDefaults.cardColors().contentColor,
+            disabledContainerColor = CardDefaults.cardColors().disabledContainerColor,
+            disabledContentColor = CardDefaults.cardColors().disabledContentColor
+        ),
+        border = BorderStroke(0.5.dp, MainColor3)
     ) {
         Column(modifier = Modifier.padding(16.dp)) {
             Image(

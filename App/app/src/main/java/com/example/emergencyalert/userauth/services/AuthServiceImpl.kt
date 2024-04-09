@@ -1,6 +1,7 @@
 package com.example.emergencyalert.userauth.services
 
 import com.example.emergencyalert.constants.HttpRoutes
+import com.example.emergencyalert.userauth.dto.AddContacts
 import com.example.emergencyalert.userauth.dto.AuthToken
 import com.example.emergencyalert.userauth.dto.UserInfo
 import com.example.emergencyalert.userauth.dto.UserLogin
@@ -36,6 +37,18 @@ class AuthServiceImpl(
             }
             contentType(ContentType.Application.Json)
             setBody(userInfo)
+        }
+        println(response)
+        return response.status == HttpStatusCode.OK
+    }
+
+    override suspend fun addContacts(contacts: AddContacts, authToken: String): Boolean {
+        val response = client.put(HttpRoutes.ADD_CONTACTS){
+            headers{
+                append("authToken",authToken)
+            }
+            contentType(ContentType.Application.Json)
+            setBody(contacts)
         }
         println(response)
         return response.status == HttpStatusCode.OK

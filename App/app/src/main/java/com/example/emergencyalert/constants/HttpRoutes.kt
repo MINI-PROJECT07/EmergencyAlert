@@ -9,5 +9,6 @@ object HttpRoutes {
     const val GET_HOSPITALS_NEAREST = "$BASE_URL/api/hospital/getHospitalNearest"
     const val GENERATE_ACCIDENT = "$BASE_URL/api/accident/createAccident"
     const val ADD_MED_INFO = "$BASE_URL/api/user/updateUser"
+    const val ADD_CONTACTS = "$BASE_URL/api/user/updateUser"
     const val GET_USER_INFO = "$BASE_URL/api/user/getUserInfo"
 }

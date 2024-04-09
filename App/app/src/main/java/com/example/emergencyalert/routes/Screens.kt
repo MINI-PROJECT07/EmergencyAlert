@@ -11,4 +11,7 @@ sealed class Screens(val route:String) {
     object Settings: Screens("settings")
     object About: Screens("about")
     object Help: Screens("help")
+    object AddContacts: Screens("addcontacts")
+    object Contacts: Screens("contacts")
+    object Donors: Screens("donors")
 }

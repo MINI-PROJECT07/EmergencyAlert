@@ -24,6 +24,7 @@ import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.OutlinedTextFieldDefaults
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.setValue
@@ -70,7 +71,12 @@ fun Mytextfield(labelvalue: String, painterResource: Painter): String {
         shape = RoundedCornerShape(20.dp),
         leadingIcon = {
             Icon(painter = painterResource, contentDescription = "")
-        }
+        },
+        colors = OutlinedTextFieldDefaults.colors(
+            focusedBorderColor = MainColor,
+            focusedLabelColor = MainColor,
+            cursorColor = MainColor
+        )
     )
     return textvalue.value
 }
@@ -144,6 +150,11 @@ fun PasswordMytextfield(labelvalue: String, painterResource: Painter): String {
                 Icon(imageVector = icon, contentDescription = "")
             }
         },
+        colors = OutlinedTextFieldDefaults.colors(
+            focusedBorderColor = MainColor,
+            focusedLabelColor = MainColor,
+            cursorColor = MainColor
+        ),
         visualTransformation = if (passwordvisble.value)
             VisualTransformation.None else PasswordVisualTransformation()
     )

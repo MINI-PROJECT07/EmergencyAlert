@@ -32,13 +32,14 @@ import com.example.emergencyalert.R
 import com.example.emergencyalert.TextBold
 import com.example.emergencyalert.dataStore
 import com.example.emergencyalert.routes.Screens
+import com.example.emergencyalert.userauth.UserViewModel
 import com.example.emergencyalert.userauth.dto.UserLogin
 import com.example.emergencyalert.userauth.services.AuthService
 import kotlinx.coroutines.launch
 
 
 @Composable
-fun LoginScreen(navController: NavController, context: Context) {
+fun LoginScreen(navController: NavController, context: Context,userViewModel: UserViewModel) {
     val authService = AuthService.create()
     var email by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
@@ -52,7 +53,7 @@ fun LoginScreen(navController: NavController, context: Context) {
     ) {
         Column() {
             TextBold("Login")
-            Spacer(modifier = Modifier.height(5.dp))
+            Spacer(modifier = Modifier.height(10.dp))
             email = Mytextfield(
                 labelvalue = "Email",
                 painterResource(id = R.drawable.gmail)
@@ -62,7 +63,7 @@ fun LoginScreen(navController: NavController, context: Context) {
                 labelvalue = "Password",
                 painterResource = painterResource(id = R.drawable.lock_outline)
             )
-            Spacer(modifier = Modifier.height(50.dp))
+            Spacer(modifier = Modifier.height(30.dp))
             Buttoncomponent(
                 value = "Login"
             ) {
@@ -75,6 +76,7 @@ fun LoginScreen(navController: NavController, context: Context) {
                         context.dataStore.edit { preferences ->
                             preferences[stringPreferencesKey("auth_counter")] = authToken.authToken
                         }
+                        userViewModel.getUserInfo()
                         navController.navigate(Screens.Home.route) {
                             popUpTo(navController.graph.findStartDestination().id) {
                                 saveState = true

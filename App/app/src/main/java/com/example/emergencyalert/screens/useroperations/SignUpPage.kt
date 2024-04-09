@@ -32,12 +32,13 @@ import com.example.emergencyalert.R
 import com.example.emergencyalert.TextBold
 import com.example.emergencyalert.dataStore
 import com.example.emergencyalert.routes.Screens
+import com.example.emergencyalert.userauth.UserViewModel
 import com.example.emergencyalert.userauth.dto.UserRegistration
 import com.example.emergencyalert.userauth.services.AuthService
 import kotlinx.coroutines.launch
 
 @Composable
-fun SignUpScreen(navController: NavController, context: Context) {
+fun SignUpScreen(navController: NavController, context: Context, userViewModel: UserViewModel) {
     val authService = AuthService.create()
     var name by remember { mutableStateOf("") }
     var phoneNo by remember { mutableStateOf("") }
@@ -54,7 +55,7 @@ fun SignUpScreen(navController: NavController, context: Context) {
         ) {
         Column(Modifier.fillMaxSize()) {
             TextBold(value = "Create Account")
-            Spacer(modifier = Modifier.height(10.dp))
+            Spacer(modifier = Modifier.height(15.dp))
             name = Mytextfield(
                 labelvalue = "Name",
                 painterResource(id = R.drawable.account_outline)
@@ -75,7 +76,7 @@ fun SignUpScreen(navController: NavController, context: Context) {
                 labelvalue = "Password",
                 painterResource = painterResource(id = R.drawable.lock_outline)
             )
-            Spacer(modifier = Modifier.height(50.dp))
+            Spacer(modifier = Modifier.height(30.dp))
             Buttoncomponent(
                 value = "Register"
             ) {
@@ -92,6 +93,7 @@ fun SignUpScreen(navController: NavController, context: Context) {
                         context.dataStore.edit { preferences ->
                             preferences[stringPreferencesKey("auth_counter")] = authToken.authToken
                         }
+                        userViewModel.getUserInfo()
                         navController.navigate(Screens.Home.route) {
                             popUpTo(navController.graph.findStartDestination().id) {
                                 saveState = true

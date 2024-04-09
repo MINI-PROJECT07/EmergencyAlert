@@ -69,6 +69,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.core.content.ContextCompat.startActivity
 import com.example.emergencyalert.accidents.AccidentViewModel
 import com.example.emergencyalert.location.LatLong
+import com.example.emergencyalert.userauth.UserViewModel
 
 @RequiresApi(Build.VERSION_CODES.S)
 @Composable
@@ -77,7 +78,8 @@ fun HomeScreen(
     context: Context,
     sensorViewModel: SensorViewModel,
     locationViewModel: LocationViewModel,
-    accidentViewModel: AccidentViewModel
+    accidentViewModel: AccidentViewModel,
+    userViewModel: UserViewModel
 ) {
     Scaffold(
         modifier = Modifier.fillMaxSize()
@@ -97,7 +99,8 @@ fun HomeScreen(
                     context = context,
                     sensorViewModel = sensorViewModel,
                     locationViewModel = locationViewModel,
-                    accidentViewModel = accidentViewModel
+                    accidentViewModel = accidentViewModel,
+                    userViewModel = userViewModel
                 )
             }
         }
@@ -111,7 +114,8 @@ fun MainHomeScreen(
     context: Context,
     sensorViewModel: SensorViewModel,
     locationViewModel: LocationViewModel,
-    accidentViewModel: AccidentViewModel
+    accidentViewModel: AccidentViewModel,
+    userViewModel: UserViewModel
 ) {
     Column(
         modifier = Modifier.fillMaxSize(),
@@ -125,7 +129,8 @@ fun MainHomeScreen(
             AccidentDialog(
                 sensorViewModel = sensorViewModel, context = context,
                 locationViewModel = locationViewModel,
-                accidentViewModel = accidentViewModel
+                accidentViewModel = accidentViewModel,
+                userViewModel= userViewModel
             )
         }
 

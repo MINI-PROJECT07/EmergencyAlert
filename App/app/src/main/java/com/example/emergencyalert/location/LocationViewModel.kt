@@ -17,7 +17,12 @@ class LocationViewModel @Inject constructor(private val defaultLocationClient: D
     var location = mutableStateOf<Location?>(null);
 
     fun startLocationUpdates(interval: Long) {
-        locationFlow = defaultLocationClient.getLocationUpdates(interval)
+        try {
+            locationFlow = defaultLocationClient.getLocationUpdates(interval)
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+
     }
 
     fun stopLocationUpdates() {
@@ -26,12 +31,16 @@ class LocationViewModel @Inject constructor(private val defaultLocationClient: D
 
     init {
         startLocationUpdates(5000)
-        viewModelScope.launch {
-            locationFlow?.let {
-                locationFlow?.collect {
-                    location.value = it
+        try {
+            viewModelScope.launch {
+                locationFlow?.let {
+                    locationFlow?.collect {
+                        location.value = it
+                    }
                 }
             }
+        } catch (e: Exception) {
+            e.printStackTrace()
         }
     }
 }

@@ -1,13 +1,12 @@
-package com.example.emergencyalert.screens.useraccount
+package com.example.emergencyalert.screens.donors
 
-import android.content.Context
 import androidx.compose.foundation.layout.Column
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 
 @Composable
-fun  HistoryScreen(context: Context){
+fun DonorScreen() {
     Column {
-        Text(text = "History")
+        Text(text = "Donors")
     }
 }

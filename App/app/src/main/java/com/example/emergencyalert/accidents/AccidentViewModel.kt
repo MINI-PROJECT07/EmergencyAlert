@@ -6,6 +6,7 @@ import androidx.lifecycle.ViewModel
 import com.example.emergencyalert.accidents.dto.CreateAccident
 import com.example.emergencyalert.accidents.services.AccidentService
 import com.example.emergencyalert.location.LatLong
+import com.example.emergencyalert.userauth.dto.Contact
 import com.example.emergencyalert.util.SendSms
 import com.example.emergencyalert.util.generateLocationUrl
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -20,7 +21,7 @@ class AccidentViewModel @Inject constructor(
     private val sendSms: SendSms,
 ) : ViewModel() {
     @RequiresApi(Build.VERSION_CODES.O)
-    suspend fun accidentHappened(latLong: LatLong) {
+    suspend fun accidentHappened(latLong: LatLong,contacts:List<Contact>?) {
         val accident = CreateAccident(
             latitude = latLong.latitude,
             longitude = latLong.longitude,
@@ -30,10 +31,14 @@ class AccidentViewModel @Inject constructor(
         )
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
-            sendSms.sendSms(
-                latLong,
-                "+918767206376"
-            )
+            if (contacts != null) {
+                for(contact in contacts){
+                    sendSms.sendSms(
+                        latLong,
+                        contact.phoneNo
+                    )
+                }
+            }
         }
         val createAccidentResponse = accidentService.generateAccident(authToken, accident)
         println(createAccidentResponse)
