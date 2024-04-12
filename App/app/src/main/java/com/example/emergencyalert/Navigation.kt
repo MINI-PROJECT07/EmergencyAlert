@@ -17,6 +17,7 @@ import androidx.compose.material.icons.filled.AccountCircle
 import androidx.compose.material.icons.filled.Bloodtype
 import androidx.compose.material.icons.filled.History
 import androidx.compose.material.icons.filled.Home
+import androidx.compose.material.icons.filled.HomeWork
 import androidx.compose.material.icons.filled.LocalHospital
 import androidx.compose.material.ripple.rememberRipple
 import androidx.compose.material3.Icon
@@ -47,11 +48,12 @@ import com.example.emergencyalert.hospitals.HospitalViewModel
 import com.example.emergencyalert.screens.hospital.HospitalScreen
 import com.example.emergencyalert.routes.Screens
 import com.example.emergencyalert.screens.donors.DonorScreen
-import com.example.emergencyalert.screens.useraccount.HistoryScreen
 import com.example.emergencyalert.screens.home.HomeScreen
 import com.example.emergencyalert.screens.useraccount.Contacts
+import com.example.emergencyalert.screens.useraccount.FirstAid
 import com.example.emergencyalert.screens.useroperations.AddContactsForm
 import com.example.emergencyalert.screens.useroperations.AddMedInfo
+import com.example.emergencyalert.screens.useroperations.EditMedInfoForm
 import com.example.emergencyalert.screens.useroperations.LoginScreen
 import com.example.emergencyalert.screens.useroperations.SignUpScreen
 import com.example.emergencyalert.sensor.SensorViewModel
@@ -109,14 +111,17 @@ fun MyNavigation(navController: NavHostController, isLoggedIn: Boolean, context:
         composable(Screens.Profile.route) {
             ProfileScreen(context = context, userViewModel, navController)
         }
-        composable(Screens.History.route) {
-            HistoryScreen(context = context)
+        composable(Screens.FirstAid.route) {
+            FirstAid(context = context)
         }
         composable(Screens.Contacts.route) {
             Contacts(userViewModel = userViewModel)
         }
         composable(Screens.Donors.route) {
             DonorScreen()
+        }
+        composable(Screens.EditMedInfo.route) {
+            EditMedInfoForm(userViewModel)
         }
     }
 
@@ -222,9 +227,9 @@ data class BottomNavItem(
                 title = "Profile"
             ),
             BottomNavItem(
-                icon = Icons.Filled.LocalHospital,
+                icon = Icons.Filled.HomeWork,
                 route = Screens.Hospitals.route,
-                title = "Help"
+                title = "Hospitals"
             ),
             BottomNavItem(
                 icon = Icons.Filled.Home,
@@ -237,9 +242,9 @@ data class BottomNavItem(
                 title = "Donors"
             ),
             BottomNavItem(
-                icon = Icons.Filled.History,
-                route = Screens.History.route,
-                title = "History"
+                icon = Icons.Filled.LocalHospital,
+                route = Screens.FirstAid.route,
+                title = "FirstAid"
             )
         )
     }

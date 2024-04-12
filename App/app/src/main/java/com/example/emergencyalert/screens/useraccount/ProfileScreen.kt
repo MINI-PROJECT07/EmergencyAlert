@@ -273,7 +273,15 @@ fun Details(userInfo: UserInfo?, navController: NavController) {
                 .padding(8.dp)
         ) {
             Button(
-                onClick = { /* Handle button 3 click */ },
+                onClick = {
+                    navController.navigate(Screens.EditMedInfo.route) {
+                        popUpTo(Screens.Profile.route) {
+                            inclusive = true
+                        }
+                        launchSingleTop = true
+                        restoreState = true
+                    }
+                },
                 modifier = Modifier
                     .fillMaxWidth()
                     .weight(1f)

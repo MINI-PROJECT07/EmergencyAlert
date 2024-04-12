@@ -60,6 +60,7 @@ fun AccidentDialog(
     val scope = rememberCoroutineScope();
 
     if (sensorViewModel.value1 >= 20 && !openDialog.value) {
+        println("Alert Dialog Opened")
         sensorViewModel.pauseSensor()
         openDialog.value = true
         sensorViewModel.value1 = 0
@@ -78,7 +79,7 @@ fun AccidentDialog(
                 )
                 scope.launch {
                     accidentViewModel.accidentHappened(
-                        latLong,userViewModel.userInfo.value?.emergencyNumbers
+                        latLong, userViewModel.userInfo.value?.emergencyNumbers
                     );
                 }
                 sensorViewModel.startSensor()
@@ -138,7 +139,7 @@ fun AccidentDialog(
                                 )
                                 scope.launch {
                                     accidentViewModel.accidentHappened(
-                                        latLong,userViewModel.userInfo.value?.emergencyNumbers
+                                        latLong, userViewModel.userInfo.value?.emergencyNumbers
                                     );
                                 }
                                 isAccident.value = true

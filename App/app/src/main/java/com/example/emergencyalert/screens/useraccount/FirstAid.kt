@@ -6,8 +6,8 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 
 @Composable
-fun  HistoryScreen(context: Context){
+fun  FirstAid(context: Context){
     Column {
-        Text(text = "History")
+        Text(text = "First Aid Screen")
     }
 }

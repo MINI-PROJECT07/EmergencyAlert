@@ -61,8 +61,19 @@ import android.Manifest.permission.CALL_PHONE
 import android.Manifest.permission.CAMERA
 import android.Manifest.permission.RECORD_AUDIO
 import android.Manifest.permission.SEND_SMS
+import androidx.compose.foundation.BorderStroke
+import androidx.compose.foundation.border
+import androidx.compose.foundation.gestures.Orientation
+import androidx.compose.foundation.gestures.rememberScrollableState
+import androidx.compose.foundation.gestures.scrollable
 import androidx.compose.foundation.layout.width
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.AddAlert
 import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.CardColors
+import androidx.compose.material3.Icon
+import androidx.compose.material3.LocalContentColor
+import androidx.compose.material3.OutlinedIconButton
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.text.style.TextAlign
@@ -88,6 +99,13 @@ fun HomeScreen(
             modifier = Modifier
                 .padding(it)
                 .fillMaxSize()
+                .scrollable(
+                    state = rememberScrollableState {
+                        it
+                    },
+                    orientation = Orientation.Vertical,
+                    enabled = true
+                )
         ) {
             Row(
                 modifier = Modifier
@@ -123,14 +141,16 @@ fun MainHomeScreen(
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         Column {
+            Spacer(modifier = Modifier.height(10.dp))
             TopRoundPart(sensorViewModel = sensorViewModel)
             Spacer(modifier = Modifier.height(16.dp))
-            FeaturesGrid()
+            GenerateAlertCard(sensorViewModel = sensorViewModel)
+            Spacer(modifier = Modifier.height(16.dp))
             AccidentDialog(
                 sensorViewModel = sensorViewModel, context = context,
                 locationViewModel = locationViewModel,
                 accidentViewModel = accidentViewModel,
-                userViewModel= userViewModel
+                userViewModel = userViewModel
             )
         }
 
@@ -147,8 +167,26 @@ fun TopRoundPart(
     ElevatedCard(
         modifier = modifier
             .fillMaxWidth()
-            .padding(5.dp)
+            .padding(5.dp),
+        colors = CardColors(
+            containerColor = MainColor,
+            contentColor = CardDefaults.cardColors().contentColor,
+            disabledContentColor = CardDefaults.cardColors().disabledContentColor,
+            disabledContainerColor = CardDefaults.cardColors().disabledContainerColor
+        )
+
     ) {
+        Text(
+            text = "Current Acceleration", style = TextStyle(
+                fontSize = 25.sp,
+                fontWeight = FontWeight.SemiBold,
+                color = Color.White,
+                textAlign = TextAlign.Center
+            ),
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(10.dp)
+        )
         Row(
             modifier = Modifier
                 .fillMaxWidth()
@@ -158,13 +196,15 @@ fun TopRoundPart(
         ) {
             Box(
                 modifier = Modifier
-                    .size(200.dp)
-                    .background(color = MainColor, shape = CircleShape),
+                    .size(120.dp)
+                    .background(color = MainColor, shape = CircleShape)
+                    .border(
+                        1.dp, Color.White, CircleShape
+                    ),
             ) {
                 Column(
                     modifier = Modifier
-                        .size(200.dp)
-                        .background(MainColor, shape = CircleShape),
+                        .size(120.dp),
                     verticalArrangement = Arrangement.Center,
                     horizontalAlignment = Alignment.CenterHorizontally
                 ) {
@@ -182,42 +222,62 @@ fun TopRoundPart(
     }
 }
 
+@RequiresApi(Build.VERSION_CODES.S)
 @Composable
-fun FeaturesGrid(
+fun GenerateAlertCard(
     modifier: Modifier = Modifier,
-    features: List<String> = listOf("Feature 1", "Feature 2", "Feature 3", "Feature 4")
-) {
-    Column(
-        modifier = modifier
-    ) {
-        val chunks = features.chunked(2)
-        chunks.forEach { chunk ->
-            Row(
-                modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.SpaceEvenly
-            ) {
-                chunk.forEach { feature ->
-                    FeatureCard(text = feature, modifier = Modifier.weight(1f))
-                }
-            }
-            Spacer(modifier = Modifier.height(6.dp))
-        }
-    }
-}
+    sensorViewModel: SensorViewModel,
 
-@Composable
-fun FeatureCard(
-    modifier: Modifier = Modifier,
-    text: String
-) {
+    ) {
     ElevatedCard(
         modifier = modifier
-            .padding(horizontal = 4.dp)
-            .height(130.dp),
-    ) {
-        Text(
-            text = text,
-            modifier = Modifier.padding(16.dp)
+            .padding(horizontal = 4.dp),
+        colors = CardColors(
+            containerColor = Color(237, 8, 0),
+            contentColor = CardDefaults.cardColors().contentColor,
+            disabledContentColor = CardDefaults.cardColors().disabledContentColor,
+            disabledContainerColor = CardDefaults.cardColors().disabledContainerColor
         )
+    ) {
+        Column(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(5.dp),
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
+            Text(
+                text = "Generate an alert",
+                style = TextStyle(
+                    fontSize = 25.sp,
+                    fontWeight = FontWeight.SemiBold,
+                    color = Color.White,
+                    textAlign = TextAlign.Center
+                ),
+                modifier = Modifier
+                    .padding(10.dp)
+                    .fillMaxWidth()
+            )
+            OutlinedIconButton(
+                onClick = {
+                    sensorViewModel.pauseSensor()
+                    sensorViewModel.value1 = 30
+                },
+                Modifier
+                    .padding(15.dp)
+                    .size(70.dp),
+                border = BorderStroke(
+                    1.dp, Color.White
+                )
+            ) {
+                Icon(
+                    imageVector = Icons.Filled.AddAlert,
+                    contentDescription = null,
+                    Modifier
+                        .size(50.dp)
+                        .padding(10.dp),
+                    tint = Color.White
+                )
+            }
+        }
     }
 }
