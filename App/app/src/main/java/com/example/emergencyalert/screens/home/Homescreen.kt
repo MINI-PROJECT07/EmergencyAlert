@@ -69,6 +69,8 @@ import androidx.compose.foundation.gestures.scrollable
 import androidx.compose.foundation.layout.width
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.AddAlert
+import androidx.compose.material.icons.filled.Edit
+import androidx.compose.material.icons.filled.Pause
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.CardColors
 import androidx.compose.material3.Icon
@@ -80,6 +82,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.core.content.ContextCompat.startActivity
 import com.example.emergencyalert.accidents.AccidentViewModel
 import com.example.emergencyalert.location.LatLong
+import com.example.emergencyalert.routes.Screens
 import com.example.emergencyalert.userauth.UserViewModel
 
 @RequiresApi(Build.VERSION_CODES.S)
@@ -118,7 +121,8 @@ fun HomeScreen(
                     sensorViewModel = sensorViewModel,
                     locationViewModel = locationViewModel,
                     accidentViewModel = accidentViewModel,
-                    userViewModel = userViewModel
+                    userViewModel = userViewModel,
+                    navController = navController
                 )
             }
         }
@@ -133,7 +137,8 @@ fun MainHomeScreen(
     sensorViewModel: SensorViewModel,
     locationViewModel: LocationViewModel,
     accidentViewModel: AccidentViewModel,
-    userViewModel: UserViewModel
+    userViewModel: UserViewModel,
+    navController: NavHostController
 ) {
     Column(
         modifier = Modifier.fillMaxSize(),
@@ -145,7 +150,8 @@ fun MainHomeScreen(
             TopRoundPart(sensorViewModel = sensorViewModel)
             Spacer(modifier = Modifier.height(16.dp))
             GenerateAlertCard(sensorViewModel = sensorViewModel)
-            Spacer(modifier = Modifier.height(16.dp))
+            Spacer(modifier = Modifier.height(20.dp))
+            EditAndPauseButtons(navController = navController, sensorViewModel = sensorViewModel)
             AccidentDialog(
                 sensorViewModel = sensorViewModel, context = context,
                 locationViewModel = locationViewModel,
@@ -281,3 +287,51 @@ fun GenerateAlertCard(
         }
     }
 }
+@RequiresApi(Build.VERSION_CODES.S)
+@Composable
+fun EditAndPauseButtons(
+    navController: NavHostController,
+    sensorViewModel: SensorViewModel
+) {
+    Row(
+        modifier = Modifier.fillMaxWidth().padding(10.dp),
+        horizontalArrangement = Arrangement.SpaceBetween,
+        verticalAlignment = Alignment.CenterVertically
+    ) {
+        EditContactsButton(navController = navController)
+        Spacer(modifier = Modifier.width(16.dp))
+    }
+}
+
+@Composable
+fun EditContactsButton(
+    navController: NavHostController
+) {
+    Button(
+        onClick = {
+            navController.navigate(Screens.EditContacts.route){
+                popUpTo(Screens.Home.route) {
+                    inclusive = false
+                }
+                launchSingleTop = true
+                restoreState = true
+            }
+        },
+        colors = ButtonDefaults.buttonColors(
+            containerColor = MainColor,
+            contentColor = Color.White
+        ),
+        modifier = Modifier.height(120.dp),
+        shape = RoundedCornerShape(10.dp)
+    ) {
+        Column(
+            verticalArrangement = Arrangement.Center,
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
+            Icon(Icons.Filled.Edit, contentDescription = null, modifier = Modifier.size(40.dp))
+            Spacer(modifier = Modifier.height(5.dp))
+            Text("Edit Contacts")
+        }
+    }
+}
+

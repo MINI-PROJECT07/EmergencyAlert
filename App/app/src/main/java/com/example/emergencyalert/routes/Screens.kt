@@ -8,12 +8,12 @@ sealed class Screens(val route:String) {
     object Profile: Screens("profile")
     object FirstAid: Screens("firstaid")
     object AddMedInfo: Screens("addmedinfo")
-
     object EditMedInfo: Screens("editmedinfo")
     object Settings: Screens("settings")
     object About: Screens("about")
     object Help: Screens("help")
     object AddContacts: Screens("addcontacts")
+    object EditContacts: Screens("editcontacts")
     object Contacts: Screens("contacts")
     object Donors: Screens("donors")
 }

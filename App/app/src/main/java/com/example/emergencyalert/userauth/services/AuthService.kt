@@ -22,6 +22,7 @@ interface AuthService {
     suspend fun addContacts(contacts: AddContacts, authToken: String):Boolean
 
     suspend fun getUserInfo(authToken: String): UserInfo
+
     companion object   {
         fun create(): AuthService {
             return AuthServiceImpl(
