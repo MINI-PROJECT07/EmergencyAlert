@@ -11,4 +11,6 @@ object HttpRoutes {
     const val ADD_MED_INFO = "$BASE_URL/api/user/updateUser"
     const val ADD_CONTACTS = "$BASE_URL/api/user/updateUser"
     const val GET_USER_INFO = "$BASE_URL/api/user/getUserInfo"
+    const val GET_BLOOD_DONORS_NEAREST = "$BASE_URL/api/bloodDonor/getBloodDonorsNearest"
+    const val CREATE_BLOOD_DONOR = "$BASE_URL/api/bloodDonor/createBloodDonor"
 }
