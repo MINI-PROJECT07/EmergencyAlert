@@ -16,4 +16,5 @@ sealed class Screens(val route:String) {
     object EditContacts: Screens("editcontacts")
     object Contacts: Screens("contacts")
     object Donors: Screens("donors")
+    object AddBloodDonor: Screens("addblooddonor")
 }

@@ -52,6 +52,7 @@ import com.example.emergencyalert.screens.home.HomeScreen
 import com.example.emergencyalert.screens.useraccount.Contacts
 //import com.example.emergencyalert.screens.useraccount.FirstAid
 import com.example.emergencyalert.screens.useroperations.AddContactsForm
+import com.example.emergencyalert.screens.useroperations.AddDonorInfo
 import com.example.emergencyalert.screens.useroperations.AddMedInfo
 import com.example.emergencyalert.screens.useroperations.EditContact
 import com.example.emergencyalert.screens.useroperations.EditMedInfoForm
@@ -130,6 +131,9 @@ fun MyNavigation(navController: NavHostController, isLoggedIn: Boolean, context:
         }
         composable(Screens.EditContacts.route) {
             EditContact(userViewModel = userViewModel, navController = navController)
+        }
+        composable(Screens.AddBloodDonor.route) {
+            AddDonorInfo(context = context,userViewModel = userViewModel, navController = navController)
         }
     }
 

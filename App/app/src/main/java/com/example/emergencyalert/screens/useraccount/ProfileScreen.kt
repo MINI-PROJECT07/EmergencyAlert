@@ -226,7 +226,13 @@ fun Details(userInfo: UserInfo?, navController: NavController) {
                 .padding(8.dp)
         ) {
             Button(
-                onClick = { /* Handle button 1 click */ },
+                onClick = {  navController.navigate(Screens.AddBloodDonor.route) {
+                    popUpTo(Screens.Profile.route) {
+                        inclusive = true
+                    }
+                    launchSingleTop = true
+                    restoreState = true
+                }},
                 modifier = Modifier
                     .fillMaxWidth()
                     .weight(1f)
