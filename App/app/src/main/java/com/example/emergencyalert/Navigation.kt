@@ -50,11 +50,12 @@ import com.example.emergencyalert.routes.Screens
 import com.example.emergencyalert.screens.donors.DonorScreen
 import com.example.emergencyalert.screens.home.HomeScreen
 import com.example.emergencyalert.screens.useraccount.Contacts
-import com.example.emergencyalert.screens.useraccount.FirstAid
+//import com.example.emergencyalert.screens.useraccount.FirstAid
 import com.example.emergencyalert.screens.useroperations.AddContactsForm
 import com.example.emergencyalert.screens.useroperations.AddMedInfo
 import com.example.emergencyalert.screens.useroperations.EditContact
 import com.example.emergencyalert.screens.useroperations.EditMedInfoForm
+import com.example.emergencyalert.screens.useroperations.FirstAid
 import com.example.emergencyalert.screens.useroperations.LoginScreen
 import com.example.emergencyalert.screens.useroperations.SignUpScreen
 import com.example.emergencyalert.sensor.SensorViewModel
