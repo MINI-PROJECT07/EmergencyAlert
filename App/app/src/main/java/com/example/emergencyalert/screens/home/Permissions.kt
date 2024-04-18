@@ -35,6 +35,7 @@ import com.google.accompanist.permissions.rememberPermissionState
 fun MultiplePermissionDemo() {
     val multiplePermission = rememberMultiplePermissionsState(
         permissions = listOf(
+            Manifest.permission.READ_PHONE_STATE,
             Manifest.permission.SEND_SMS,
             Manifest.permission.CALL_PHONE,
             Manifest.permission.ACCESS_FINE_LOCATION,
@@ -169,6 +170,12 @@ fun MultiplePermissionDemo() {
                                 Manifest.permission.RECORD_AUDIO -> {
                                     Text(
                                         text = "We need Record Audio permission. Please grant the permission.",
+                                        fontSize = 16.sp
+                                    )
+                                }
+                                Manifest.permission.READ_PHONE_STATE -> {
+                                    Text(
+                                        text = "We need Read Phone State permission. Please grant the permission.",
                                         fontSize = 16.sp
                                     )
                                 }
