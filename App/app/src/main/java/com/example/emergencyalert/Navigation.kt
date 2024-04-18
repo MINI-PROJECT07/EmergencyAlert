@@ -44,6 +44,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import com.example.emergencyalert.accidents.AccidentViewModel
+import com.example.emergencyalert.donors.DonorViewModel
 import com.example.emergencyalert.hospitals.HospitalViewModel
 import com.example.emergencyalert.screens.hospital.HospitalScreen
 import com.example.emergencyalert.routes.Screens
@@ -73,6 +74,7 @@ fun MyNavigation(navController: NavHostController, isLoggedIn: Boolean, context:
     val locationViewModel = viewModel<LocationViewModel>()
     val accidentViewModel = viewModel<AccidentViewModel>()
     val userViewModel = viewModel<UserViewModel>()
+    val donorViewModel = viewModel<DonorViewModel>()
     NavHost(
         navController = navController,
         startDestination = if (!isLoggedIn) Screens.Login.route
@@ -121,7 +123,10 @@ fun MyNavigation(navController: NavHostController, isLoggedIn: Boolean, context:
             Contacts(userViewModel = userViewModel)
         }
         composable(Screens.Donors.route) {
-            DonorScreen()
+            DonorScreen(
+                donorViewModel = donorViewModel,
+                locationViewModel = locationViewModel
+            )
         }
         composable(Screens.EditMedInfo.route) {
             EditMedInfoForm(userViewModel,navController)
